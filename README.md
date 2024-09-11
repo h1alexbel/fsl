@@ -39,7 +39,7 @@ Here, we logged in as `@jeff` fake GitHub user, created two repositories:
 To apply it on fakehub, run it (make sure you have [fakehub] installed):
 
 ```bash
-fakehub start --include init.fsl
+fakehub start --include init.fsl -d
 ```
 
 Then, pull newly created data:
