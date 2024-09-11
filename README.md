@@ -34,7 +34,7 @@ me: @jeff
 
 Here, we logged in as `@jeff` fake GitHub user, created two repositories:
 `jeff/foo`, `jeff/bar`, submitted new issue with title `"this is testing"` and
-`"bug"` label to `jeff/foo`. 
+`"bug"` label to `jeff/foo`.
 
 To apply it on fakehub, run it (make sure you have [fakehub] installed):
 
@@ -42,7 +42,26 @@ To apply it on fakehub, run it (make sure you have [fakehub] installed):
 fakehub start --include init.fsl
 ```
 
-Should work.
+Then, pull newly created data:
+
+```bash
+curl -L \
+  -H "Accept: application/vnd.github+json" \
+  -H "Authorization: Bearer @jeff" \
+  -H "X-GitHub-Api-Version: 2022-11-28" \
+  http://localhost:3000/repos/jeff/foo/issues/1
+```
+
+Response should be:
+
+```json
+{
+  "url": "http://localhost:3000/repos/jeff/foo/issues/1",
+  "repository_url": "http://localhost:3000/repos/jeff/foo",
+  "labels_url": "http://localhost:3000/repos/jeff/foo/issues/1/labels{/name}",
+  ...
+}
+```
 
 ## How to Use
 
