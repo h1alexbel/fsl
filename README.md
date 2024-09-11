@@ -69,7 +69,7 @@ TBD..
 
 ## How to contribute?
 
-Make sure that you have [Rust], [just]+ installed on your system, then fork
+Make sure that you have [Rust] and [just] installed on your system, then fork
 this repository, make changes, send us a [pull request][guidelines]. We will
 review your changes and apply them to the `master` branch shortly, provided
 they don't violate our quality standards. To avoid frustration, before sending
