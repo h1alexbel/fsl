@@ -22,7 +22,27 @@ instance with desired data.
 
 ## Quick Start
 
-TBD..
+First, create `init.fsl`:
+
+```fsl
+me: @jeff
+
++repo me/foo > foo
++repo me/bar
++issue "this is testing" +label "bug" -> foo
+```
+
+Here, we logged in as `@jeff` fake GitHub user, created two repositories:
+`jeff/foo`, `jeff/bar`, submitted new issue with title `"this is testing"` and
+`"bug"` label to `jeff/foo`. 
+
+To apply it on fakehub, run it (make sure you have [fakehub] installed):
+
+```bash
+fakehub start --include init.fsl
+```
+
+Should work.
 
 ## How to Use
 
