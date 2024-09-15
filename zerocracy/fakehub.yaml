@@ -1,26 +1,23 @@
 ---
 - added: 8
   cycles: 2
-  error: 'GET https://api.github.com/search/issues?per_page=100&q=repo%3Ah1alexbel%2Ffakehub+type%3Aissue+created%3A2024-08-18..2024-09-15:
-    403 - You have exceeded a secondary rate limit. Please wait a few minutes before
-    you try again. If you reach out to GitHub Support for help, please include the
-    request ID 1008:3A5FA5:23082E6:23596DB:66E64E8E. // See: https://docs.github.com/free-pro-team@latest/rest/overview/rate-limits-for-the-rest-api#about-secondary-rate-limits'
+  error: undefined method `-' for nil
   removed: 8
-  seconds: 558.393278243
+  seconds: 363.730566618
   version: 0.26.1
   what: judges-summary
-  when: 2024-09-15 03:04:08.585643380 Z
+  when: 2024-09-15 03:33:05.212450529 Z
 - _id: 1
-  _time: 2024-09-15 02:54:50.499944887 Z
+  _time: 2024-09-15 03:27:01.804726347 Z
   _version: 0.4.0/0.26.1/
   total_forks: 0
   total_releases: 0
   total_repositories: 1
   total_stars: 5
   what: dimensions-of-terrain
-  when: 2024-09-15 02:54:50.500231663 Z
+  when: 2024-09-15 03:27:01.805017933 Z
 - _id: 2
-  _time: 2024-09-15 02:54:53.421551670 Z
+  _time: 2024-09-15 03:27:03.777397381 Z
   _version: 0.4.0/0.26.1/
   branch: renovate/zerocracy-judges-action-0.x
   details: The pull request h1alexbel/fakehub#155 has been opened by @renovate[bot].
@@ -34,7 +31,7 @@
   where: github
   who: 29139614
 - _id: 3
-  _time: 2024-09-15 02:54:54.203608414 Z
+  _time: 2024-09-15 03:27:04.185590091 Z
   _version: 0.4.0/0.26.1/
   details: The issue h1alexbel/fakehub#153 has been closed by @h1alexbel.
   event_id: 41835320161
@@ -47,7 +44,7 @@
   where: github
   who: 83453843
 - _id: 4
-  _time: 2024-09-15 02:54:54.376795273 Z
+  _time: 2024-09-15 03:27:04.293449821 Z
   _version: 0.4.0/0.26.1/
   branch: '153'
   comments: 1
@@ -71,7 +68,7 @@
   where: github
   who: 83453843
 - _id: 5
-  _time: 2024-09-15 02:55:07.203741380 Z
+  _time: 2024-09-15 03:27:12.625119849 Z
   _version: 0.4.0/0.26.1/
   details: The issue h1alexbel/fakehub#133 has been closed by @h1alexbel.
   event_id: 41832634644
@@ -84,7 +81,7 @@
   where: github
   who: 83453843
 - _id: 6
-  _time: 2024-09-15 02:55:07.639240493 Z
+  _time: 2024-09-15 03:27:12.817644486 Z
   _version: 0.4.0/0.26.1/
   branch: '101'
   comments: 6
@@ -108,7 +105,7 @@
   where: github
   who: 8086956
 - _id: 7
-  _time: 2024-09-15 02:55:16.259888340 Z
+  _time: 2024-09-15 03:27:18.372856789 Z
   _version: 0.4.0/0.26.1/
   details: The issue h1alexbel/fakehub#101 has been closed by @0pdd.
   event_id: 41831770656
@@ -121,7 +118,7 @@
   where: github
   who: 24456188
 - _id: 8
-  _time: 2024-09-15 02:55:16.616867611 Z
+  _time: 2024-09-15 03:27:18.674123601 Z
   _version: 0.4.0/0.26.1/
   commit: 3c5eaf749ec8a5569a95271422a224fa0bb5deb7
   default_branch: master
@@ -139,7 +136,7 @@
   where: github
   who: 83453843
 - _id: 9
-  _time: 2024-09-15 02:55:16.886749965 Z
+  _time: 2024-09-15 03:27:18.853014510 Z
   _version: 0.4.0/0.26.1/
   details: The issue h1alexbel/fakehub#147 has been closed by @rultor.
   event_id: 41829245647
@@ -152,7 +149,7 @@
   where: github
   who: 8086956
 - _id: 10
-  _time: 2024-09-15 02:55:16.892285057 Z
+  _time: 2024-09-15 03:27:18.858725270 Z
   _version: 0.4.0/0.26.1/
   branch: '147'
   comments: 9
@@ -176,7 +173,7 @@
   where: github
   who: 8086956
 - _id: 11
-  _time: 2024-09-15 02:55:26.613906996 Z
+  _time: 2024-09-15 03:27:24.544074072 Z
   _version: 0.4.0/0.26.1/
   branch: '153'
   details: The pull request h1alexbel/fakehub#154 has been opened by @h1alexbel.
@@ -190,7 +187,7 @@
   where: github
   who: 83453843
 - _id: 12
-  _time: 2024-09-15 02:55:26.620439270 Z
+  _time: 2024-09-15 03:27:24.550099836 Z
   _version: 0.4.0/0.26.1/
   details: The issue h1alexbel/fakehub#153 has been opened by @h1alexbel.
   event_id: 41828233755
@@ -203,7 +200,7 @@
   where: github
   who: 83453843
 - _id: 13
-  _time: 2024-09-15 02:55:26.630514643 Z
+  _time: 2024-09-15 03:27:24.573993322 Z
   _version: 0.4.0/0.26.1/
   branch: '101'
   details: The pull request h1alexbel/fakehub#152 has been opened by @h1alexbel.
@@ -217,7 +214,7 @@
   where: github
   who: 83453843
 - _id: 14
-  _time: 2024-09-15 02:55:26.647007204 Z
+  _time: 2024-09-15 03:27:24.620461014 Z
   _version: 0.4.0/0.26.1/
   commit: 0a4f6d6e6fda57fea7335e727842f940fa1e822d
   default_branch: master
@@ -235,7 +232,7 @@
   where: github
   who: 83453843
 - _id: 15
-  _time: 2024-09-15 02:55:26.981993009 Z
+  _time: 2024-09-15 03:27:24.890231869 Z
   _version: 0.4.0/0.26.1/
   branch: '147'
   details: The pull request h1alexbel/fakehub#151 has been opened by @h1alexbel.
@@ -249,7 +246,7 @@
   where: github
   who: 83453843
 - _id: 16
-  _time: 2024-09-15 02:55:26.995471019 Z
+  _time: 2024-09-15 03:27:24.903039423 Z
   _version: 0.4.0/0.26.1/
   commit: 8bfef028a9c39ccf305b9b54d2a11c18cf06ce53
   default_branch: master
@@ -267,7 +264,7 @@
   where: github
   who: 83453843
 - _id: 17
-  _time: 2024-09-15 02:55:27.286157685 Z
+  _time: 2024-09-15 03:27:25.089541720 Z
   _version: 0.4.0/0.26.1/
   details: The issue h1alexbel/fakehub#150 has been opened by @0pdd.
   event_id: 41798776538
@@ -280,7 +277,7 @@
   where: github
   who: 24456188
 - _id: 18
-  _time: 2024-09-15 02:55:27.295657253 Z
+  _time: 2024-09-15 03:27:25.096642325 Z
   _version: 0.4.0/0.26.1/
   details: The issue h1alexbel/fakehub#144 has been closed by @rultor.
   event_id: 41798775668
@@ -293,7 +290,7 @@
   where: github
   who: 8086956
 - _id: 19
-  _time: 2024-09-15 02:55:27.301306937 Z
+  _time: 2024-09-15 03:27:25.101939216 Z
   _version: 0.4.0/0.26.1/
   branch: '144'
   comments: 3
@@ -317,7 +314,7 @@
   where: github
   who: 8086956
 - _id: 20
-  _time: 2024-09-15 02:55:35.429286176 Z
+  _time: 2024-09-15 03:27:30.097512544 Z
   _version: 0.4.0/0.26.1/
   branch: '144'
   details: The pull request h1alexbel/fakehub#149 has been opened by @h1alexbel.
@@ -331,7 +328,7 @@
   where: github
   who: 83453843
 - _id: 21
-  _time: 2024-09-15 02:55:35.502356939 Z
+  _time: 2024-09-15 03:27:30.180920660 Z
   _version: 0.4.0/0.26.1/
   branch: renovate/actions-checkout-digest
   comments: 3
@@ -355,7 +352,7 @@
   where: github
   who: 8086956
 - _id: 22
-  _time: 2024-09-15 02:56:41.976285856 Z
+  _time: 2024-09-15 03:28:08.706610631 Z
   _version: 0.4.0/0.26.1/
   comments: 5
   commits: 1
@@ -373,7 +370,7 @@
   where: github
   who: 83453843
 - _id: 23
-  _time: 2024-09-15 02:56:42.489605081 Z
+  _time: 2024-09-15 03:28:09.039732569 Z
   _version: 0.4.0/0.26.1/
   branch: renovate/actions-checkout-digest
   details: The pull request h1alexbel/fakehub#148 has been opened by @renovate[bot].
@@ -387,7 +384,7 @@
   where: github
   who: 29139614
 - _id: 24
-  _time: 2024-09-15 02:56:42.706139964 Z
+  _time: 2024-09-15 03:28:09.164160848 Z
   _version: 0.4.0/0.26.1/
   details: The issue h1alexbel/fakehub#147 has been opened by @h1alexbel.
   event_id: 41661697460
@@ -400,7 +397,7 @@
   where: github
   who: 83453843
 - _id: 25
-  _time: 2024-09-15 02:56:42.929580830 Z
+  _time: 2024-09-15 03:28:09.192551483 Z
   _version: 0.4.0/0.26.1/
   details: The issue h1alexbel/fakehub#142 has been closed by @rultor.
   event_id: 41658001647
@@ -413,7 +410,7 @@
   where: github
   who: 8086956
 - _id: 26
-  _time: 2024-09-15 02:56:42.938391370 Z
+  _time: 2024-09-15 03:28:09.201388892 Z
   _version: 0.4.0/0.26.1/
   branch: '142'
   comments: 3
@@ -437,7 +434,7 @@
   where: github
   who: 8086956
 - _id: 27
-  _time: 2024-09-15 02:56:50.990059489 Z
+  _time: 2024-09-15 03:28:14.105397440 Z
   _version: 0.4.0/0.26.1/
   branch: '142'
   details: The pull request h1alexbel/fakehub#146 has been opened by @h1alexbel.
@@ -451,7 +448,7 @@
   where: github
   who: 83453843
 - _id: 28
-  _time: 2024-09-15 02:56:51.022495048 Z
+  _time: 2024-09-15 03:28:14.135195858 Z
   _version: 0.4.0/0.26.1/
   branch: renovate/zerocracy-judges-action-0.x
   comments: 3
@@ -475,7 +472,7 @@
   where: github
   who: 8086956
 - _id: 29
-  _time: 2024-09-15 02:57:13.490198246 Z
+  _time: 2024-09-15 03:28:27.026878037 Z
   _version: 0.4.0/0.26.1/
   branch: renovate/zerocracy-judges-action-0.x
   details: The pull request h1alexbel/fakehub#145 has been opened by @renovate[bot].
@@ -489,7 +486,7 @@
   where: github
   who: 29139614
 - _id: 30
-  _time: 2024-09-15 02:57:13.504359327 Z
+  _time: 2024-09-15 03:28:27.047844496 Z
   _version: 0.4.0/0.26.1/
   branch: '121'
   comments: 5
@@ -513,7 +510,7 @@
   where: github
   who: 83453843
 - _id: 31
-  _time: 2024-09-15 02:57:21.593376576 Z
+  _time: 2024-09-15 03:28:31.894541501 Z
   _version: 0.4.0/0.26.1/
   commit: f4cf14dcd291a4339518f9d0ab1653e32652da1f
   default_branch: master
@@ -531,7 +528,7 @@
   where: github
   who: 83453843
 - _id: 32
-  _time: 2024-09-15 02:57:21.893261289 Z
+  _time: 2024-09-15 03:28:32.144768162 Z
   _version: 0.4.0/0.26.1/
   details: The issue h1alexbel/fakehub#141 has been closed by @rultor.
   event_id: 41587454530
@@ -544,7 +541,7 @@
   where: github
   who: 8086956
 - _id: 33
-  _time: 2024-09-15 02:57:21.900351026 Z
+  _time: 2024-09-15 03:28:32.153181225 Z
   _version: 0.4.0/0.26.1/
   branch: '141'
   comments: 3
@@ -568,7 +565,7 @@
   where: github
   who: 8086956
 - _id: 34
-  _time: 2024-09-15 02:57:44.229306353 Z
+  _time: 2024-09-15 03:28:44.908629992 Z
   _version: 0.4.0/0.26.1/
   details: The issue h1alexbel/fakehub#144 has been opened by @h1alexbel.
   event_id: 41585843481
@@ -581,7 +578,7 @@
   where: github
   who: 83453843
 - _id: 35
-  _time: 2024-09-15 02:57:44.646046499 Z
+  _time: 2024-09-15 03:28:44.933208082 Z
   _version: 0.4.0/0.26.1/
   branch: '141'
   details: The pull request h1alexbel/fakehub#143 has been opened by @h1alexbel.
@@ -595,7 +592,7 @@
   where: github
   who: 83453843
 - _id: 36
-  _time: 2024-09-15 02:57:44.943587931 Z
+  _time: 2024-09-15 03:28:44.985769979 Z
   _version: 0.4.0/0.26.1/
   details: The issue h1alexbel/fakehub#142 has been opened by @0pdd.
   event_id: 41580890850
@@ -608,7 +605,7 @@
   where: github
   who: 24456188
 - _id: 37
-  _time: 2024-09-15 02:57:44.977103841 Z
+  _time: 2024-09-15 03:28:45.003521867 Z
   _version: 0.4.0/0.26.1/
   details: The issue h1alexbel/fakehub#137 has been closed by @rultor.
   event_id: 41580888544
@@ -621,7 +618,7 @@
   where: github
   who: 8086956
 - _id: 38
-  _time: 2024-09-15 02:57:45.015868300 Z
+  _time: 2024-09-15 03:28:45.018249131 Z
   _version: 0.4.0/0.26.1/
   details: The issue h1alexbel/fakehub#141 has been opened by @0pdd.
   event_id: 41580889745
@@ -634,7 +631,7 @@
   where: github
   who: 24456188
 - _id: 39
-  _time: 2024-09-15 02:57:45.045176265 Z
+  _time: 2024-09-15 03:28:45.031310690 Z
   _version: 0.4.0/0.26.1/
   branch: '127'
   comments: 3
@@ -658,7 +655,7 @@
   where: github
   who: 8086956
 - _id: 40
-  _time: 2024-09-15 02:57:53.176801395 Z
+  _time: 2024-09-15 03:28:51.265431733 Z
   _version: 0.4.0/0.26.1/
   branch: '127'
   details: The pull request h1alexbel/fakehub#140 has been opened by @h1alexbel.
@@ -672,7 +669,7 @@
   where: github
   who: 83453843
 - _id: 41
-  _time: 2024-09-15 02:57:53.253033620 Z
+  _time: 2024-09-15 03:28:51.319201719 Z
   _version: 0.4.0/0.26.1/
   details: The issue h1alexbel/fakehub#134 has been closed by @0pdd.
   event_id: 41576363037
@@ -685,7 +682,7 @@
   where: github
   who: 24456188
 - _id: 42
-  _time: 2024-09-15 02:57:53.261697929 Z
+  _time: 2024-09-15 03:28:51.326492812 Z
   _version: 0.4.0/0.26.1/
   details: The issue h1alexbel/fakehub#127 has been closed by @rultor.
   event_id: 41576362753
@@ -698,7 +695,7 @@
   where: github
   who: 8086956
 - _id: 43
-  _time: 2024-09-15 02:57:53.270067737 Z
+  _time: 2024-09-15 03:28:51.333985503 Z
   _version: 0.4.0/0.26.1/
   branch: '127'
   comments: 4
@@ -722,7 +719,7 @@
   where: github
   who: 8086956
 - _id: 44
-  _time: 2024-09-15 02:58:01.728765225 Z
+  _time: 2024-09-15 03:28:56.205536982 Z
   _version: 0.4.0/0.26.1/
   branch: renovate/jamesives-github-pages-deploy-action-4.x
   comments: 3
@@ -746,7 +743,7 @@
   where: github
   who: 8086956
 - _id: 45
-  _time: 2024-09-15 02:58:10.064234438 Z
+  _time: 2024-09-15 03:29:01.104947155 Z
   _version: 0.4.0/0.26.1/
   comments: 5
   commits: 1
@@ -764,7 +761,7 @@
   where: github
   who: 83453843
 - _id: 46
-  _time: 2024-09-15 02:58:10.345897352 Z
+  _time: 2024-09-15 03:29:01.352572392 Z
   _version: 0.4.0/0.26.1/
   commit: 6236bf09102c3ccfd4f11d097497b28de95cdf49
   default_branch: master
@@ -781,22 +778,8 @@
   when: 2024-09-02 16:50:39.000000000 Z
   where: github
   who: 83453843
-- _id: 47
-  _time: 2024-09-15 02:58:10.623496795 Z
-  _version: 0.4.0/0.26.1/
-  branch: renovate/jamesives-github-pages-deploy-action-4.x
-  details: The pull request h1alexbel/fakehub#139 has been opened by @renovate[bot].
-  event_id: 41554100911
-  event_type: PullRequestEvent
-  is_human: 0
-  issue: 139
-  repository: 807802459
-  what: pull-was-opened
-  when: 2024-09-02 16:23:46.000000000 Z
-  where: github
-  who: 29139614
-- _id: 49
-  _time: 2024-09-15 02:58:11.231751928 Z
+- _id: 48
+  _time: 2024-09-15 03:29:01.824298354 Z
   _version: 0.4.0/0.26.1/
   details: The '#bug' label was attached by @0pdd to the issue h1alexbel/fakehub#141.
   is_human: 0
@@ -807,8 +790,8 @@
   when: 2024-09-03 13:34:35.000000000 Z
   where: github
   who: 24456188
-- _id: 50
-  _time: 2024-09-15 02:58:11.621012858 Z
+- _id: 49
+  _time: 2024-09-15 03:29:02.158895044 Z
   _version: 0.4.0/0.26.1/
   details: The '#bug' label was attached by @0pdd to the issue h1alexbel/fakehub#142.
   is_human: 0
@@ -819,8 +802,8 @@
   when: 2024-09-03 13:34:37.000000000 Z
   where: github
   who: 24456188
-- _id: 51
-  _time: 2024-09-15 02:58:12.043766681 Z
+- _id: 50
+  _time: 2024-09-15 03:29:02.416734470 Z
   _version: 0.4.0/0.26.1/
   details: The '#enhancement' label was attached by @h1alexbel to the issue h1alexbel/fakehub#144.
   is_human: 1
@@ -831,8 +814,8 @@
   when: 2024-09-03 15:42:18.000000000 Z
   where: github
   who: 83453843
-- _id: 52
-  _time: 2024-09-15 02:58:12.381603295 Z
+- _id: 51
+  _time: 2024-09-15 03:29:02.644757402 Z
   _version: 0.4.0/0.26.1/
   details: The '#enhancement' label was attached by @h1alexbel to the issue h1alexbel/fakehub#147.
   is_human: 1
@@ -843,8 +826,8 @@
   when: 2024-09-05 15:11:32.000000000 Z
   where: github
   who: 83453843
-- _id: 53
-  _time: 2024-09-15 02:58:12.673050768 Z
+- _id: 52
+  _time: 2024-09-15 03:29:02.909223583 Z
   _version: 0.4.0/0.26.1/
   details: The '#bug' label was attached by @0pdd to the issue h1alexbel/fakehub#150.
   is_human: 0
@@ -855,8 +838,8 @@
   when: 2024-09-10 16:16:31.000000000 Z
   where: github
   who: 24456188
-- _id: 54
-  _time: 2024-09-15 02:58:13.062546962 Z
+- _id: 53
+  _time: 2024-09-15 03:29:03.142037272 Z
   _version: 0.4.0/0.26.1/
   details: The '#enhancement' label was attached by @h1alexbel to the issue h1alexbel/fakehub#153.
   is_human: 1
@@ -867,38 +850,42 @@
   when: 2024-09-11 12:11:55.000000000 Z
   where: github
   who: 83453843
-- _id: 56
-  _time: 2024-09-15 02:58:13.080968052 Z
+- _id: 55
+  _time: 2024-09-15 03:29:03.157737071 Z
   _version: 0.4.0/0.26.1/
-  average_build_duration: 222.076
+  average_backlog_size: 4.896551724137931
+  average_build_duration: 221.028
   average_build_mttr: -65424
-  average_build_success_rate: 0.673
+  average_build_success_rate: 0.675
   average_issue_lifetime: 985978.25
+  average_pull_files_size: 4.25
+  average_pull_hoc_size: 126.125
   average_pull_lifetime: 76784.72222222222
+  average_pull_rejection_rate: 0.1111111111111111
   average_release_interval: 0
-  since: 2024-08-18 02:58:13.081133701 Z
+  since: 2024-08-18 03:29:03.157887603 Z
   what: quality-of-service
-  when: 2024-09-15 02:58:13.081064873 Z
-- _id: 57
-  _time: 2024-09-15 03:03:42.436797739 Z
+  when: 2024-09-15 03:29:03.157829765 Z
+- _id: 56
+  _time: 2024-09-15 03:32:51.137221888 Z
   _version: 0.4.0/0.26.1/
-  since: 2024-08-18 03:03:42.437038419 Z
+  since: 2024-08-18 03:32:51.137411292 Z
   total_commits_pushed: 76
   total_hoc_committed: 4747
   total_issues_created: 15
   total_pulls_submitted: 1
   total_releases_published: 0
   what: quantity-of-deliverables
-  when: 2024-09-15 03:03:42.436965903 Z
-- _id: 58
-  _time: 2024-09-15 03:04:05.752180842 Z
+  when: 2024-09-15 03:32:51.137347162 Z
+- _id: 57
+  _time: 2024-09-15 03:33:03.425097800 Z
   _version: 0.4.0/0.26.1/
-  latest: 41936204585
+  latest: 41936398877
   repository: 807802459
   what: events-were-scanned
   where: github
-- _id: 59
-  _time: 2024-09-15 03:04:08.576743916 Z
+- _id: 58
+  _time: 2024-09-15 03:33:05.202906789 Z
   _version: 0.4.0/0.26.1/
   latest: 0
   repository: 807802459
