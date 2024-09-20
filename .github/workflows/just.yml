@@ -29,7 +29,7 @@ on:
     branches:
       - master
 concurrency:
-  group: ${{ github.ref }}
+  group: just-${{ github.ref }}
   cancel-in-progress: true
 env:
   RUSTFLAGS: "-Dwarnings"
