@@ -30,8 +30,8 @@ pub struct FslParser {}
 mod tests {
     use crate::parser::fsl_parser::{FslParser, Rule};
     use anyhow::Result;
-    use pest::Parser;
     use hamcrest::{equal_to, is, HamcrestMatcher};
+    use pest::Parser;
 
     #[test]
     fn creates_parser() -> Result<()> {
