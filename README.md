@@ -6,7 +6,7 @@
 
 [![just](https://github.com/h1alexbel/fsl/actions/workflows/just.yml/badge.svg)](https://github.com/h1alexbel/fsl/actions/workflows/just.yml)
 [![Crates.io Version](https://img.shields.io/crates/v/fsl)](https://crates.io/crates/fsl)
-[![codecov](https://codecov.io/gh/h1alexbel/fsl/graph/badge.svg?token=0bcdqd2UKT)](https://codecov.io/gh/h1alexbel/fsl)
+[![codecov](https://codecov.io/github/h1alexbel/fsl/graph/badge.svg?token=GXcsA2ffuN)](https://codecov.io/github/h1alexbel/fsl)
 [![PDD status](http://www.0pdd.com/svg?name=h1alexbel/fsl)](http://www.0pdd.com/p?name=h1alexbel/fsl)
 [![Hits-of-Code](https://hitsofcode.com/github/h1alexbel/fsl)](https://hitsofcode.com/view/github/h1alexbel/fsl)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/h1alexbel/fsl/blob/master/LICENSE.txt)
