@@ -19,32 +19,31 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
----
-name: just
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
-concurrency:
-  group: just-${{ github.ref }}
-  cancel-in-progress: true
-env:
-  RUSTFLAGS: "-Dwarnings"
-jobs:
-  build:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ ubuntu-22.04, windows-2022, macos-12 ]
-        just-version: [ "1.30.1" ]
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: extractions/setup-just@v2
-        with:
-          just-version: ${{ matrix.just-version }}
-      - run: just install
-      - run: just full
+[package]
+name = "fsl"
+version = "0.0.0"
+edition = "2021"
+license = "MIT"
+description = "FakeHub State Language. DSL for managing state in fakehub"
+authors = ["Aliaksei Bialiauski <aliaksei.bialiauski@hey.com>"]
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+anyhow = "1.0.86"
+serde = { version = "1.0.203", features = ["derive"] }
+log = { version = "0.4.21", features = [] }
+hamcrest = "0.1.5"
+pest = "2.7.13"
+pest_derive = "2.7.13"
+
+[lints.rust]
+missing_docs = "deny"
+
+[workspace.lints.clippy]
+unwrap_used = "deny"
+question_mark_used = "deny"
+
+[package.metadata.cargo-machete]
+ignored = ["log", "serde"]
