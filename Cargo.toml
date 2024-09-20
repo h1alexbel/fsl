@@ -25,7 +25,7 @@ version = "0.0.0"
 edition = "2021"
 license = "MIT"
 description = "FakeHub State Language. DSL for managing state in fakehub"
-authors = ["Aliaksei Bialíauski <aliaksei.bialiauski@hey.com>"]
+authors = ["Aliaksei Bialiauski <aliaksei.bialiauski@hey.com>"]
 
 [lib]
 path = "src/lib.rs"
