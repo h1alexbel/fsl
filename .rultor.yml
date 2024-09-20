@@ -19,36 +19,26 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-
-# Install required tools
-install:
-  cargo install cargo-machete
-
-# Full build
-full:
-  cargo clean
-  just build
-
-# Build the project.
-build:
-  just test
-  just check
-  cargo build
-
-# Run tests.
-test:
-  cargo test
-
-# Check the quality of code.
-check:
-  cargo clippy --all-targets --all-features
-  cargo fmt --check
-  cargo machete
-
-# Rultor merge script.
-rultor:
-  cargo --color=never test
-  cargo fmt --check -- --color=never
-  cargo machete
-  cargo doc --no-deps
-  cargo clippy
+---
+architect:
+  - h1alexbel
+docker:
+  image: h1alexbel/rultor-rust-image:0.0.4
+assets:
+  credentials: h1alexbel/home#assets/crates.toml
+install: |
+  just install
+merge:
+  script: |
+    just rultor
+release:
+  script: |-
+    [[ "${tag}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || exit -1
+    sed -i -e "s/^version = \"0.0.0\"/version = \"${tag}\"/" Cargo.toml
+    cargo --color=never test -vv -- --nocapture
+    cargo --color=never fmt --check
+    cargo clippy --all-targets --all-features
+    git commit -am "${tag}"
+    ls -a ../
+    mkdir -p ~/.cargo && cp ../credentials ~/.cargo
+    cargo --color=never publish
