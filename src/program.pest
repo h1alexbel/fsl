@@ -22,7 +22,8 @@
 
 /// Program.
 me = { (ME ~ SEMICOLUMN ~ WHITE_SPACE ~ login) }
-login = {"@"+}
+login = {"@" ~ char+}
+char = { ASCII_ALPHANUMERIC | "." | "_" | "/" }
 
 ME = {"me"}
 SEMICOLUMN = {":"}

@@ -28,14 +28,16 @@ pub struct FslParser {}
 
 #[cfg(test)]
 mod tests {
+    use crate::parser::fsl_parser::{FslParser, Rule};
     use anyhow::Result;
     use pest::Parser;
-    use crate::parser::fsl_parser::{FslParser, Rule};
+    use hamcrest::{equal_to, is, HamcrestMatcher};
 
     #[test]
     fn creates_parser() -> Result<()> {
-        let parse = FslParser::parse(Rule::field, "-1");
-        print!("{:?}", parse);
+        let parse = FslParser::parse(Rule::me, "me: @jeff")
+            .expect("Failed to parse FSL syntax");
+        assert_that!(parse.as_str(), is(equal_to("me: @jeff")));
         Ok(())
     }
 }
