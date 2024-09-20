@@ -21,9 +21,9 @@
 // SOFTWARE.
 
 /// Program.
-me = { (ME ~ SEMICOLUMN ~ WHITE_SPACE ~ login) }
+me = { (ME ~ SEMICOLON ~ WHITE_SPACE ~ login) }
 login = {"@" ~ char+}
 char = { ASCII_ALPHANUMERIC | "." | "_" | "/" }
 
 ME = {"me"}
-SEMICOLUMN = {":"}
+SEMICOLON = {":"}
