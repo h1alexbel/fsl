@@ -19,8 +19,23 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-/*!
-FSL.
- */
-/// FSL Parser.
-pub mod parser;
+use pest_derive::Parser;
+
+/// FSL Syntax Parser.
+#[derive(Parser)]
+#[grammar = "program.pest"]
+pub struct FslParser {}
+
+#[cfg(test)]
+mod tests {
+    use anyhow::Result;
+    use pest::Parser;
+    use crate::parser::fsl_parser::{FslParser, Rule};
+
+    #[test]
+    fn creates_parser() -> Result<()> {
+        let parse = FslParser::parse(Rule::field, "-1");
+        print!("{:?}", parse);
+        Ok(())
+    }
+}
