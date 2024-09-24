@@ -37,6 +37,7 @@ log = { version = "0.4.21", features = [] }
 hamcrest = "0.1.5"
 pest = "2.7.13"
 pest_derive = "2.7.13"
+parameterized = "2.0.0"
 
 [lints.rust]
 missing_docs = "deny"

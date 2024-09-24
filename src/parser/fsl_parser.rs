@@ -28,6 +28,7 @@ pub struct FslParser {}
 
 #[cfg(test)]
 mod tests {
+    use parameterized::parameterized;
     use crate::parser::fsl_parser::{FslParser, Rule};
     use anyhow::Result;
     use hamcrest::{equal_to, is, HamcrestMatcher};
@@ -42,18 +43,58 @@ mod tests {
     }
 
     #[test]
+    fn parses_program() -> Result<()> {
+        let parsed = FslParser::parse(
+            Rule::program,
+            "me: @jeff\n+repo me/foo > x\n+repo me/bar > y\n",
+        )
+        .expect("Failed to parse FSL syntax")
+        .next()
+        .expect("Failed to get pair");
+        let pairs = parsed.into_inner();
+        print!("{}", pairs);
+        // assert_that!(
+        //     parsed.as_str(),
+        //     is(equal_to("me: @jeff\n+repo me/foo > x\n+repo me/bar > y\n"))
+        // );
+        Ok(())
+    }
+
+    #[test]
     fn parses_command() -> Result<()> {
         let parsed = FslParser::parse(Rule::command, "+repo me/foo > foo")
             .expect("Failed to parse FSL syntax");
         assert_that!(parsed.as_str(), is(equal_to("+repo me/foo > foo")));
         Ok(())
     }
-    
+
     #[test]
     fn parses_object() -> Result<()> {
         let parsed = FslParser::parse(Rule::object, "repo me/foo > foo")
             .expect("Failed to parse FSL syntax");
         assert_that!(parsed.as_str(), is(equal_to("repo me/foo > foo")));
         Ok(())
+    }
+
+    #[test]
+    fn parses_new() -> Result<()> {
+        let parsed = FslParser::parse(Rule::new, "> x")
+            .expect("Failed to parse FSL syntax");
+        assert_that!(parsed.as_str(), is(equal_to("> x")));
+        Ok(())
+    }
+
+    #[parameterized(input = {"@jeff", "@x", "@_f"})]
+    fn parses_login(input: &str) -> Result<()> {
+        let parsed = FslParser::parse(Rule::login, input)
+            .expect("Failed to parse login");
+        assert_that!(parsed.as_str(), is(equal_to(input)));
+        Ok(())
+    }
+
+    #[should_panic(expected = "Failed to parse login")]
+    #[test]
+    fn panics_on_empty_login() {
+        FslParser::parse(Rule::login, "@").expect("Failed to parse login");
     }
 }
