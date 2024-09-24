@@ -35,7 +35,9 @@ mod tests {
     use pest::Parser;
 
     #[test]
-    // @todo #5:35min X.
+    // @todo #5:35min Supply FSL programs from input files.
+    //  Instead of supplying FSL programs as strings here, we should read them
+    //  from `resources/snippets/`.
     fn parses_program() -> Result<()> {
         let parsed = FslParser::parse(
             Rule::program,
@@ -44,12 +46,11 @@ mod tests {
         .expect("Failed to parse FSL syntax")
         .next()
         .expect("Failed to get pair");
-        let pairs = parsed.into_inner();
-        print!("{}", pairs);
-        // assert_that!(
-        //     parsed.as_str(),
-        //     is(equal_to("me: @jeff\n+repo me/foo > x\n+repo me/bar > y\n"))
-        // );
+        let pairs = parsed.into_inner().as_str();
+        assert_that!(
+            pairs,
+            is(equal_to("me: @jeff\n+repo me/foo > x\n+repo me/bar > y"))
+        );
         Ok(())
     }
 
@@ -132,10 +133,12 @@ mod tests {
             "_",
             "_test",
             "@",
-            "."
+            ".",
+            "/t"
         }
     )]
     fn panics_on_invalid_ref(input: &str) {
-        FslParser::parse(Rule::reference, input).expect("Failed to parse reference");
+        FslParser::parse(Rule::reference, input)
+            .expect("Failed to parse reference");
     }
 }
