@@ -48,8 +48,9 @@ impl Fslc {
     /// New compiler for program in file.
     pub fn file(path: &Path) -> Fslc {
         Fslc {
-            program: fs::read_to_string(path)
-                .expect(&format!("Failed to read path {}", path.display())),
+            program: fs::read_to_string(path).unwrap_or_else(|_| {
+                panic!("Failed to read path: {}", path.display())
+            }),
             parser: FslParser {},
         }
     }
@@ -72,19 +73,19 @@ mod tests {
     fn compiles_program_as_string() -> Result<()> {
         testing_logger::setup();
         Fslc::program(String::from("me: @jeff +repo me/foo")).out();
-        testing_logger::validate( |logs| {
+        testing_logger::validate(|logs| {
             assert_eq!(logs.len(), 1);
             assert_eq!(logs[0].body, "Done!");
             assert_eq!(logs[0].level, Level::Info);
         });
         Ok(())
     }
-    
+
     #[test]
     fn compiles_program_from_file() -> Result<()> {
         testing_logger::setup();
         Fslc::file(Path::new("resources/programs/me.fsl")).out();
-        testing_logger::validate( |logs| {
+        testing_logger::validate(|logs| {
             assert_eq!(logs.len(), 1);
             assert_eq!(logs[0].body, "Done!");
             assert_eq!(logs[0].level, Level::Info);
