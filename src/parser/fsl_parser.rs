@@ -48,4 +48,12 @@ mod tests {
         assert_that!(parsed.as_str(), is(equal_to("+repo me/foo > foo")));
         Ok(())
     }
+    
+    #[test]
+    fn parses_object() -> Result<()> {
+        let parsed = FslParser::parse(Rule::object, "repo me/foo > foo")
+            .expect("Failed to parse FSL syntax");
+        assert_that!(parsed.as_str(), is(equal_to("repo me/foo > foo")));
+        Ok(())
+    }
 }
