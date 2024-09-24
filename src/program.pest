@@ -25,19 +25,15 @@ program = { (me ~ NEWLINE) ~ (command ~ NEWLINE)* }
 command = { CREATION ~ object }
 object = { oid ~ WHITE_SPACE ~ (attributes ~ WHITE_SPACE)? ~ new? }
 oid = { char+ }
-// allow only me/+
-attributes = { char+ }
+attributes = { (ME ~ AT ~ char+) | char+ }
 new = { ASSIGNMENT ~ WHITE_SPACE ~ reference}
 reference = { char+ }
 me = { (ME ~ SEMICOLON ~ WHITE_SPACE ~ login) }
-login = {"@" ~ ASCII_ALPHANUMERIC+}
-char = { ASCII_ALPHANUMERIC | "." | "_" | "/" }
+login = {"@" ~ char+}
+char = {ASCII_ALPHANUMERIC}
 
-// me: @jeff
-// +repo me/foo > foo
-// +repo me/bar
-// +issue "this is testing" +label "bug" -> foo
 ASSIGNMENT = {">"}
 CREATION = {"+"}
 ME = {"me"}
+AT = {"/"}
 SEMICOLON = {":"}

@@ -36,14 +36,6 @@ mod tests {
 
     #[test]
     // @todo #5:35min X.
-    fn parses_me() -> Result<()> {
-        let parse = FslParser::parse(Rule::me, "me: @jeff")
-            .expect("Failed to parse FSL syntax");
-        assert_that!(parse.as_str(), is(equal_to("me: @jeff")));
-        Ok(())
-    }
-
-    #[test]
     fn parses_program() -> Result<()> {
         let parsed = FslParser::parse(
             Rule::program,
@@ -59,6 +51,36 @@ mod tests {
         //     is(equal_to("me: @jeff\n+repo me/foo > x\n+repo me/bar > y\n"))
         // );
         Ok(())
+    }
+
+    #[test]
+    fn parses_me() -> Result<()> {
+        let parse = FslParser::parse(Rule::me, "me: @jeff")
+            .expect("Failed to parse FSL syntax");
+        assert_that!(parse.as_str(), is(equal_to("me: @jeff")));
+        Ok(())
+    }
+
+    #[parameterized(input = {"@jeff", "@x"})]
+    fn parses_login(input: &str) -> Result<()> {
+        let parsed = FslParser::parse(Rule::login, input)
+            .expect("Failed to parse login");
+        assert_that!(parsed.as_str(), is(equal_to(input)));
+        Ok(())
+    }
+
+    #[should_panic(expected = "Failed to parse login")]
+    #[parameterized(
+        input = {
+            "@_f",
+            "abc",
+            "@",
+            "testing@",
+            "@."
+        }
+    )]
+    fn panics_on_invalid_login(input: &str) {
+        FslParser::parse(Rule::login, input).expect("Failed to parse login");
     }
 
     #[test]
@@ -91,27 +113,5 @@ mod tests {
             .expect("Failed to parse FSL syntax");
         assert_that!(parsed.as_str(), is(equal_to("> x")));
         Ok(())
-    }
-
-    #[parameterized(input = {"@jeff", "@x"})]
-    fn parses_login(input: &str) -> Result<()> {
-        let parsed = FslParser::parse(Rule::login, input)
-            .expect("Failed to parse login");
-        assert_that!(parsed.as_str(), is(equal_to(input)));
-        Ok(())
-    }
-
-    #[should_panic(expected = "Failed to parse login")]
-    #[parameterized(
-        input = {
-            "@_f",
-            "abc",
-            "@",
-            "testing@",
-            "@."
-        }
-    )]
-    fn panics_on_invalid_login(input: &str) {
-        FslParser::parse(Rule::login, input).expect("Failed to parse login");
     }
 }
