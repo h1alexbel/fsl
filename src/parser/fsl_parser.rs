@@ -98,7 +98,7 @@ mod tests {
         assert_that!(parsed.as_str(), is(equal_to("repo me/foo > foo")));
         Ok(())
     }
-    
+
     #[test]
     fn parses_object_without_attributes() -> Result<()> {
         let parsed = FslParser::parse(Rule::object, "repo > foo")
@@ -113,5 +113,29 @@ mod tests {
             .expect("Failed to parse FSL syntax");
         assert_that!(parsed.as_str(), is(equal_to("> x")));
         Ok(())
+    }
+
+    #[parameterized(input = {"x", "xy", "foo123", "test"})]
+    fn parses_ref(input: &str) -> Result<()> {
+        let parsed = FslParser::parse(Rule::reference, input)
+            .expect("Failed to parse FSL syntax");
+        assert_that!(parsed.as_str(), is(equal_to(input)));
+        Ok(())
+    }
+
+    // @todo #5:30min Prohibit usage of upper-case letters in reference, i.e. X, Y, Z.
+    //  We should prohibit usage of upper-case letters in reference name. Only
+    //  lower-case letters should be allowed.
+    #[should_panic(expected = "Failed to parse reference")]
+    #[parameterized(
+        input = {
+            "_",
+            "_test",
+            "@",
+            "."
+        }
+    )]
+    fn panics_on_invalid_ref(input: &str) {
+        FslParser::parse(Rule::reference, input).expect("Failed to parse reference");
     }
 }
