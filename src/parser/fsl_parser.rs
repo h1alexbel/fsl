@@ -28,10 +28,10 @@ pub struct FslParser {}
 
 #[cfg(test)]
 mod tests {
-    use parameterized::parameterized;
     use crate::parser::fsl_parser::{FslParser, Rule};
     use anyhow::Result;
     use hamcrest::{equal_to, is, HamcrestMatcher};
+    use parameterized::parameterized;
     use pest::Parser;
 
     #[test]
@@ -91,10 +91,16 @@ mod tests {
         assert_that!(parsed.as_str(), is(equal_to(input)));
         Ok(())
     }
-
+    
     #[should_panic(expected = "Failed to parse login")]
-    #[test]
-    fn panics_on_empty_login() {
-        FslParser::parse(Rule::login, "@").expect("Failed to parse login");
+    #[parameterized(
+        input = {
+            "abc",
+            "@",
+            "testing@"
+        }
+    )]
+    fn panics_on_invalid_login(input: &str) {
+        FslParser::parse(Rule::login, input).expect("Failed to parse login");
     }
 }
