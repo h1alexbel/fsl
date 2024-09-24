@@ -19,13 +19,5 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-/*!
-FSL.
- */
-#[allow(unused_imports)]
-#[macro_use]
-extern crate hamcrest;
-/// FSL Parser.
-pub mod parser;
 /// FSL Compiler.
-pub mod compiler;
+pub mod fsl_compiler;
