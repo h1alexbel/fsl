@@ -35,7 +35,8 @@ mod tests {
     use pest::Parser;
 
     #[test]
-    fn creates_parser() -> Result<()> {
+    // @todo #5:35min X.
+    fn parses_me() -> Result<()> {
         let parse = FslParser::parse(Rule::me, "me: @jeff")
             .expect("Failed to parse FSL syntax");
         assert_that!(parse.as_str(), is(equal_to("me: @jeff")));
@@ -73,6 +74,14 @@ mod tests {
         let parsed = FslParser::parse(Rule::object, "repo me/foo > foo")
             .expect("Failed to parse FSL syntax");
         assert_that!(parsed.as_str(), is(equal_to("repo me/foo > foo")));
+        Ok(())
+    }
+    
+    #[test]
+    fn parses_object_without_attributes() -> Result<()> {
+        let parsed = FslParser::parse(Rule::object, "repo > foo")
+            .expect("Failed to parse FSL syntax");
+        assert_that!(parsed.as_str(), is(equal_to("repo > foo")));
         Ok(())
     }
 
