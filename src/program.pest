@@ -21,9 +21,23 @@
 // SOFTWARE.
 
 /// Program.
+program = { me ~ NEWLINE ~ (command ~ NEWLINE)* }
+command = { CREATION ~ object }
+object = { oid ~ WHITE_SPACE ~ (attributes ~ WHITE_SPACE)? ~ new? }
+oid = { char+ }
+// allow only me/+
+attributes = { char+ }
+new = { ASSIGNMENT ~ WHITE_SPACE ~ reference}
+reference = { char+ }
 me = { (ME ~ SEMICOLON ~ WHITE_SPACE ~ login) }
 login = {"@" ~ char+}
 char = { ASCII_ALPHANUMERIC | "." | "_" | "/" }
 
+// me: @jeff
+// +repo me/foo > foo
+// +repo me/bar
+// +issue "this is testing" +label "bug" -> foo
+ASSIGNMENT = {">"}
+CREATION = {"+"}
 ME = {"me"}
 SEMICOLON = {":"}
