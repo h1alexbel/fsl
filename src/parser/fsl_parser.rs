@@ -116,7 +116,7 @@ mod tests {
         Ok(())
     }
 
-    #[parameterized(input = {"x", "xy", "foo123", "test"})]
+    #[parameterized(input = {"x", "xy", "foo", "test"})]
     fn parses_ref(input: &str) -> Result<()> {
         let parsed = FslParser::parse(Rule::reference, input)
             .expect("Failed to parse FSL syntax");
@@ -124,17 +124,18 @@ mod tests {
         Ok(())
     }
 
-    // @todo #5:30min Prohibit usage of upper-case letters in reference, i.e. X, Y, Z.
-    //  We should prohibit usage of upper-case letters in reference name. Only
-    //  lower-case letters should be allowed.
     #[should_panic(expected = "Failed to parse reference")]
     #[parameterized(
         input = {
             "_",
             "_test",
             "@",
+            "!",
+            "!bar",
             ".",
-            "/t"
+            "/t",
+            "X",
+            "XYZ"
         }
     )]
     fn panics_on_invalid_ref(input: &str) {
