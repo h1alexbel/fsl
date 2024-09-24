@@ -84,20 +84,22 @@ mod tests {
         Ok(())
     }
 
-    #[parameterized(input = {"@jeff", "@x", "@_f"})]
+    #[parameterized(input = {"@jeff", "@x"})]
     fn parses_login(input: &str) -> Result<()> {
         let parsed = FslParser::parse(Rule::login, input)
             .expect("Failed to parse login");
         assert_that!(parsed.as_str(), is(equal_to(input)));
         Ok(())
     }
-    
+
     #[should_panic(expected = "Failed to parse login")]
     #[parameterized(
         input = {
+            "@_f",
             "abc",
             "@",
-            "testing@"
+            "testing@",
+            "@."
         }
     )]
     fn panics_on_invalid_login(input: &str) {

@@ -21,7 +21,7 @@
 // SOFTWARE.
 
 /// Program.
-program = { me ~ NEWLINE ~ (command ~ NEWLINE)* }
+program = { (me ~ NEWLINE) ~ (command ~ NEWLINE)* }
 command = { CREATION ~ object }
 object = { oid ~ WHITE_SPACE ~ (attributes ~ WHITE_SPACE)? ~ new? }
 oid = { char+ }
@@ -30,7 +30,7 @@ attributes = { char+ }
 new = { ASSIGNMENT ~ WHITE_SPACE ~ reference}
 reference = { char+ }
 me = { (ME ~ SEMICOLON ~ WHITE_SPACE ~ login) }
-login = {"@" ~ char+}
+login = {"@" ~ ASCII_ALPHANUMERIC+}
 char = { ASCII_ALPHANUMERIC | "." | "_" | "/" }
 
 // me: @jeff
