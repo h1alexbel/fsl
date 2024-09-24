@@ -22,7 +22,13 @@ instance with desired data.
 
 ## Quick Start
 
-First, create `init.fsl`:
+First, install `fsl` from [crates][fsl-crates]:
+
+```bash
+cargo add fsl
+```
+
+Then, create `init.fsl`:
 
 ```fsl
 me: @jeff
@@ -36,7 +42,21 @@ Here, we logged in as `@jeff` fake GitHub user, created two repositories:
 `jeff/foo`, `jeff/bar`, submitted new issue with title `"this is testing"` and
 `"bug"` label to `jeff/foo`.
 
-To apply it on fakehub, run it (make sure you have [fakehub] installed):
+And then compile it:
+
+```rust
+use fsl::compiler::fsl_compiler::Fslc;
+use std::path::Path;
+
+let output = Fslc::file(Path::new("init.fsl")).out();
+// output...
+```
+
+This should compile `init.fsl` to [fakehub-compatible][fakehub] output.
+
+### Apply to fakehub
+
+To apply it on fakehub, run (make sure you have [fakehub] installed):
 
 ```bash
 fakehub start --include init.fsl -d
@@ -63,10 +83,6 @@ Response should be:
 }
 ```
 
-## How to Use
-
-TBD..
-
 ## How to contribute?
 
 Make sure that you have [Rust] and [just] installed on your system, then fork
@@ -84,3 +100,4 @@ just full
 [guidelines]: https://www.yegor256.com/2014/04/15/github-guidelines.html
 [Rust]: https://www.rust-lang.org/tools/install
 [just]: https://just.systems/man/en/chapter_4.html
+[fsl-crates]: https://crates.io/crates/fsl

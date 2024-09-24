@@ -38,6 +38,7 @@ hamcrest = "0.1.5"
 pest = "2.7.13"
 pest_derive = "2.7.13"
 parameterized = "2.0.0"
+testing_logger = "0.1.1"
 
 [lints.rust]
 missing_docs = "deny"
@@ -47,4 +48,4 @@ unwrap_used = "deny"
 question_mark_used = "deny"
 
 [package.metadata.cargo-machete]
-ignored = ["log", "serde"]
+ignored = ["serde"]
