@@ -19,14 +19,28 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-/*!
-FSL.
- */
-#[allow(unused_imports)]
-#[macro_use]
-extern crate hamcrest;
-/// FSL Compiler.
-pub mod compiler;
-/// FSL Parser.
-pub mod parser;
-mod sample_program;
+use std::fs;
+use std::path::Path;
+
+/// Sample program from file.
+/// `filename` File name.
+pub fn sample_program(filename: &str) -> String {
+    fs::read_to_string(Path::new(&format!("resources/programs/{}", filename)))
+        .expect("Failed to read content from file")
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::sample_program::sample_program;
+    use anyhow::Result;
+    use hamcrest::{equal_to, is, HamcrestMatcher};
+
+    #[test]
+    fn reads_sample() -> Result<()> {
+        assert_that!(
+            sample_program("me.fsl").as_str(),
+            is(equal_to("me: @jeff\n"))
+        );
+        Ok(())
+    }
+}
