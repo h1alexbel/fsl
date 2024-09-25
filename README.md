@@ -45,10 +45,10 @@ Here, we logged in as `@jeff` fake GitHub user, created two repositories:
 And then compile it:
 
 ```rust
-use fsl::compiler::fsl_compiler::Fslc;
+use fsl::transpiler::fsl_transpiler::Fslt;
 use std::path::Path;
 
-let output = Fslc::file(Path::new("init.fsl")).out();
+let output = Fslt::file(Path::new("init.fsl")).out();
 // output...
 ```
 
