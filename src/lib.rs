@@ -29,4 +29,5 @@ extern crate hamcrest;
 pub mod compiler;
 /// FSL Parser.
 pub mod parser;
-mod sample_program;
+/// Program.
+pub mod sample_program;

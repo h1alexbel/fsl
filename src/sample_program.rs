@@ -24,6 +24,11 @@ use std::path::Path;
 
 /// Sample program from file.
 /// `filename` File name.
+/// ```
+/// use hamcrest::{assert_that, equal_to, is, HamcrestMatcher};
+/// use fsl::sample_program::sample_program;
+/// assert_that!(sample_program("me.fsl").as_str(), is(equal_to("me: @jeff\n")))
+/// ```
 pub fn sample_program(filename: &str) -> String {
     fs::read_to_string(Path::new(&format!("resources/programs/{}", filename)))
         .expect("Failed to read content from file")

@@ -29,28 +29,30 @@ pub struct FslParser {}
 #[cfg(test)]
 mod tests {
     use crate::parser::fsl_parser::{FslParser, Rule};
+    #[allow(unused_imports)]
+    // required for usage in #parametrized.
+    use crate::sample_program::sample_program;
     use anyhow::Result;
     use hamcrest::{equal_to, is, HamcrestMatcher};
     use parameterized::parameterized;
     use pest::Parser;
 
-    #[test]
-    // @todo #5:35min Supply FSL programs from input files.
-    //  Instead of supplying FSL programs as strings here, we should read them
-    //  from `resources/snippets/`.
-    fn parses_program() -> Result<()> {
-        let parsed = FslParser::parse(
-            Rule::program,
-            "me: @jeff\n+repo me/foo > x\n+repo me/bar > y\n",
-        )
-        .expect("Failed to parse FSL syntax")
-        .next()
-        .expect("Failed to get pair");
+    #[parameterized(
+        program = {
+            &sample_program("me.fsl"),
+            &sample_program("plusrepo-plusbar.fsl")
+        }
+      )
+    ]
+    fn parses_program(program: &str) -> Result<()> {
+        let parsed = FslParser::parse(Rule::program, program)
+            .expect("Failed to parse FSL syntax")
+            .next()
+            .expect("Failed to get pair");
         let pairs = parsed.into_inner().as_str();
-        assert_that!(
-            pairs,
-            is(equal_to("me: @jeff\n+repo me/foo > x\n+repo me/bar > y"))
-        );
+        let mut trimmed = program.to_string();
+        trimmed.pop().expect("Failed to remove last character");
+        assert_that!(String::from(pairs), is(equal_to(trimmed)));
         Ok(())
     }
 
