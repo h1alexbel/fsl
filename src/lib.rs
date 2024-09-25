@@ -25,7 +25,7 @@ FSL.
 #[allow(unused_imports)]
 #[macro_use]
 extern crate hamcrest;
-/// FSL Transpiler.
-pub mod transpiler;
 /// FSL Parser.
 pub mod parser;
+/// FSL Transpiler.
+pub mod transpiler;
