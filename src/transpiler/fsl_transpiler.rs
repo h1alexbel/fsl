@@ -24,30 +24,30 @@ use log::info;
 use std::fs;
 use std::path::Path;
 
-/// FSL compiler.
+/// FSL transpiler.
 /// ```
-/// use fsl::compiler::fsl_compiler::Fslc;
-/// let output = Fslc::program(String::from("me: @jeff\n +repo me/foo")).out();
+/// use fsl::transpiler::fsl_transpiler::Fslt;
+/// let output = Fslt::program(String::from("me: @jeff\n +repo me/foo")).out();
 /// ```
-pub struct Fslc {
-    /// Program to compile.
+pub struct Fslt {
+    /// Program to transpiler.
     pub program: String,
     /// Parser.
     pub parser: FslParser,
 }
 
-impl Fslc {
-    /// New compiler for program.
-    pub fn program(program: String) -> Fslc {
-        Fslc {
+impl Fslt {
+    /// New transpiler for program.
+    pub fn program(program: String) -> Fslt {
+        Fslt {
             program,
             parser: FslParser {},
         }
     }
 
-    /// New compiler for program in file.
-    pub fn file(path: &Path) -> Fslc {
-        Fslc {
+    /// New transpiler for program in file.
+    pub fn file(path: &Path) -> Fslt {
+        Fslt {
             program: fs::read_to_string(path).unwrap_or_else(|_| {
                 panic!("Failed to read path: {}", path.display())
             }),
@@ -63,16 +63,16 @@ impl Fslc {
 
 #[cfg(test)]
 mod tests {
-    use crate::compiler::fsl_compiler::Fslc;
+    use crate::transpiler::fsl_transpiler::Fslt;
     use anyhow::Result;
     use log::Level;
     use std::path::Path;
     extern crate testing_logger;
 
     #[test]
-    fn compiles_program_as_string() -> Result<()> {
+    fn transpiles_program_as_string() -> Result<()> {
         testing_logger::setup();
-        Fslc::program(String::from("me: @jeff +repo me/foo")).out();
+        Fslt::program(String::from("me: @jeff +repo me/foo")).out();
         testing_logger::validate(|logs| {
             assert_eq!(logs.len(), 1);
             assert_eq!(logs[0].body, "Done!");
@@ -82,9 +82,9 @@ mod tests {
     }
 
     #[test]
-    fn compiles_program_from_file() -> Result<()> {
+    fn transpiles_program_from_file() -> Result<()> {
         testing_logger::setup();
-        Fslc::file(Path::new("resources/programs/me.fsl")).out();
+        Fslt::file(Path::new("resources/programs/me.fsl")).out();
         testing_logger::validate(|logs| {
             assert_eq!(logs.len(), 1);
             assert_eq!(logs[0].body, "Done!");
