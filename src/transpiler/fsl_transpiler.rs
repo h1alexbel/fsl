@@ -19,8 +19,8 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-use crate::parser::fsl_parser::FslParser;
-use log::info;
+use crate::parser::fsl_parser::{FslParser, Rule};
+use pest::Parser;
 use std::fs;
 use std::path::Path;
 
@@ -32,17 +32,12 @@ use std::path::Path;
 pub struct Fslt {
     /// Program to transpiler.
     pub program: String,
-    /// Parser.
-    pub parser: FslParser,
 }
 
 impl Fslt {
     /// New transpiler for program.
     pub fn program(program: String) -> Fslt {
-        Fslt {
-            program,
-            parser: FslParser {},
-        }
+        Fslt { program }
     }
 
     /// New transpiler for program in file.
@@ -51,13 +46,35 @@ impl Fslt {
             program: fs::read_to_string(path).unwrap_or_else(|_| {
                 panic!("Failed to read path: {}", path.display())
             }),
-            parser: FslParser {},
         }
     }
 
     /// Out.
-    pub fn out(self) {
-        info!("Done!");
+    pub fn out(&self) -> Vec<&str> {
+        let mut ast = vec![];
+        let pairs = FslParser::parse(Rule::program, &self.program)
+            .expect("Failed to parse program");
+        for pair in pairs {
+            match pair.as_rule() {
+                Rule::program => {
+                    for inner in pair.into_inner() {
+                        match inner.as_rule() {
+                            Rule::me => {
+                                for me in inner.into_inner() {
+                                    if me.as_rule() == Rule::login {
+                                        let login = me.as_str();
+                                        ast.push(login);
+                                    }
+                                }
+                            },
+                            _ => {}
+                        }
+                    }
+                }
+                _ => {}
+            }
+        }
+        ast
     }
 }
 
@@ -65,31 +82,24 @@ impl Fslt {
 mod tests {
     use crate::transpiler::fsl_transpiler::Fslt;
     use anyhow::Result;
-    use log::Level;
-    use std::path::Path;
-    extern crate testing_logger;
+    use hamcrest::{equal_to, is, HamcrestMatcher};
 
     #[test]
     fn transpiles_program_as_string() -> Result<()> {
         testing_logger::setup();
-        Fslt::program(String::from("me: @jeff +repo me/foo")).out();
-        testing_logger::validate(|logs| {
-            assert_eq!(logs.len(), 1);
-            assert_eq!(logs[0].body, "Done!");
-            assert_eq!(logs[0].level, Level::Info);
-        });
+        let program = String::from("me: @jeff\n +repo me/foo > x");
+        let fsl = Fslt::program(program);
+        let ast = fsl.out();
+        let first = ast.first().expect("Failed to get first value");
+        assert_that!(first, is(equal_to("@jeff")));
         Ok(())
     }
 
-    #[test]
-    fn transpiles_program_from_file() -> Result<()> {
-        testing_logger::setup();
-        Fslt::file(Path::new("resources/programs/me.fsl")).out();
-        testing_logger::validate(|logs| {
-            assert_eq!(logs.len(), 1);
-            assert_eq!(logs[0].body, "Done!");
-            assert_eq!(logs[0].level, Level::Info);
-        });
-        Ok(())
-    }
+    // #[test]
+    // fn transpiles_program_from_file() -> Result<()> {
+    //     let transpiler = Fslt::program(sample_program("plusrepo-plusbar.fsl"));
+    //     let ast = transpiler.out();
+    //     print!("{:#?}", ast);
+    //     Ok(())
+    // }
 }

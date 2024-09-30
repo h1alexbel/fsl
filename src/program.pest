@@ -28,7 +28,7 @@ oid = { char+ }
 attributes = { (ME ~ AT ~ char+) | char+ }
 new = { ASSIGNMENT ~ WHITE_SPACE ~ reference}
 reference = { char+ }
-me = { (ME ~ SEMICOLON ~ WHITE_SPACE ~ login) }
+me = { ME ~ SEMICOLON ~ WHITE_SPACE ~ login }
 login = { "@" ~ char+ }
 char = { LOWERCASE_LETTER }
 
