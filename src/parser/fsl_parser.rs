@@ -29,8 +29,6 @@ pub struct FslParser {}
 #[cfg(test)]
 mod tests {
     use crate::parser::fsl_parser::{FslParser, Rule};
-    #[allow(unused_imports)]
-    // required for usage in #parametrized.
     use crate::sample_program::sample_program;
     use anyhow::Result;
     use hamcrest::{equal_to, is, HamcrestMatcher};
