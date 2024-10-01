@@ -72,13 +72,28 @@ impl Fslt {
                                     if command.as_rule() == Rule::object {
                                         for object in command.into_inner() {
                                             if object.as_rule() == Rule::oid {
-                                                ast.push(format!("oid:{}", object.as_str()));
-                                            } else if object.as_rule() == Rule::attributes {
-                                                ast.push(format!("attrs:{}", object.as_str()));
-                                            } else if object.as_rule() == Rule::new {
+                                                ast.push(format!(
+                                                    "oid:{}",
+                                                    object.as_str()
+                                                ));
+                                            } else if object.as_rule()
+                                                == Rule::attributes
+                                            {
+                                                ast.push(format!(
+                                                    "attrs:{}",
+                                                    object.as_str()
+                                                ));
+                                            } else if object.as_rule()
+                                                == Rule::new
+                                            {
                                                 for new in object.into_inner() {
-                                                    if new.as_rule() == Rule::reference {
-                                                        ast.push(format!("ref:{}", new.as_str()));
+                                                    if new.as_rule()
+                                                        == Rule::reference
+                                                    {
+                                                        ast.push(format!(
+                                                            "ref:{}",
+                                                            new.as_str()
+                                                        ));
                                                     }
                                                 }
                                             }
@@ -107,25 +122,28 @@ mod tests {
     #[test]
     fn transpiles_program_as_string() -> Result<()> {
         testing_logger::setup();
-        let program = String::from("me: @jeff\n +repo me/foo > x");
+        let program = String::from("me: @jeff\n");
         let fsl = Fslt::program(program);
         let ast = fsl.out();
         let first = ast.first().expect("Failed to get first value");
-        assert_that!(first, is(equal_to("@jeff")));
+        assert_that!(first, is(equal_to("login:@jeff")));
         Ok(())
     }
 
     #[test]
     fn transpiles_program_from_file() -> Result<()> {
-        let transpiler = Fslt::program(sample_program("plusrepo-plusbar.fsl"));
+        let transpiler = Fslt::program(sample_program("me.fsl"));
         let ast = transpiler.out();
         let first = ast.first().expect("Failed to get first value");
-        assert_that!(first, is(equal_to("@jeff")));
+        assert_that!(first, is(equal_to("login:@jeff")));
         Ok(())
     }
 
     #[test]
     fn transpiles_full_program() -> Result<()> {
+        let transpiler = Fslt::program(sample_program("plusfoo-plusbar.fsl"));
+        let ast = transpiler.out();
+        print!("{:?}", ast);
         Ok(())
     }
 }
