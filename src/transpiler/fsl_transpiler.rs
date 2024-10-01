@@ -20,7 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 use crate::parser::fsl_parser::{FslParser, Rule};
+use log::info;
 use pest::Parser;
+use serde_json::{Map, Value};
 use std::fs;
 use std::path::Path;
 
@@ -50,65 +52,81 @@ impl Fslt {
     }
 
     /// Out.
-    pub fn out(&self) -> Vec<String> {
-        let mut ast = vec![];
+    pub fn out(&self) -> Value {
+        let mut ast = Map::new();
         let pairs = FslParser::parse(Rule::program, &self.program)
             .expect("Failed to parse program");
+        let mut cast = Vec::new();
         for pair in pairs {
-            match pair.as_rule() {
-                Rule::program => {
-                    for inner in pair.into_inner() {
-                        match inner.as_rule() {
-                            Rule::me => {
-                                for me in inner.into_inner() {
-                                    if me.as_rule() == Rule::login {
-                                        let login = me.as_str();
-                                        ast.push(format!("login:{}", login));
-                                    }
+            if pair.as_rule() == Rule::program {
+                for inner in pair.into_inner() {
+                    match inner.as_rule() {
+                        Rule::me => {
+                            for me in inner.into_inner() {
+                                if me.as_rule() == Rule::login {
+                                    ast.insert(
+                                        String::from("login"),
+                                        Value::String(String::from(
+                                            me.as_str(),
+                                        )),
+                                    );
                                 }
                             }
-                            Rule::command => {
-                                for command in inner.into_inner() {
-                                    if command.as_rule() == Rule::object {
-                                        for object in command.into_inner() {
-                                            if object.as_rule() == Rule::oid {
-                                                ast.push(format!(
-                                                    "oid:{}",
-                                                    object.as_str()
-                                                ));
-                                            } else if object.as_rule()
-                                                == Rule::attributes
-                                            {
-                                                ast.push(format!(
-                                                    "attrs:{}",
-                                                    object.as_str()
-                                                ));
-                                            } else if object.as_rule()
-                                                == Rule::new
-                                            {
-                                                for new in object.into_inner() {
-                                                    if new.as_rule()
-                                                        == Rule::reference
-                                                    {
-                                                        ast.push(format!(
-                                                            "ref:{}",
-                                                            new.as_str()
-                                                        ));
-                                                    }
+                        }
+                        Rule::command => {
+                            let mut cob = Map::new();
+                            for command in inner.into_inner() {
+                                if command.as_rule() == Rule::object {
+                                    for object in command.into_inner() {
+                                        if object.as_rule() == Rule::oid {
+                                            cob.insert(
+                                                String::from("oid"),
+                                                Value::String(String::from(
+                                                    object.as_str(),
+                                                )),
+                                            );
+                                        } else if object.as_rule()
+                                            == Rule::attributes
+                                        {
+                                            cob.insert(
+                                                String::from("attrs"),
+                                                Value::String(String::from(
+                                                    object.as_str(),
+                                                )),
+                                            );
+                                        } else if object.as_rule() == Rule::new
+                                        {
+                                            for new in object.into_inner() {
+                                                if new.as_rule()
+                                                    == Rule::reference
+                                                {
+                                                    cob.insert(
+                                                        String::from("ref"),
+                                                        Value::String(
+                                                            String::from(
+                                                                new.as_str(),
+                                                            ),
+                                                        ),
+                                                    );
                                                 }
                                             }
                                         }
                                     }
                                 }
                             }
-                            _ => {}
+                            cast.push(Value::Object(cob));
                         }
+                        _ => {}
                     }
                 }
-                _ => {}
             }
         }
-        ast
+        ast.insert(String::from("commands"), Value::Array(cast));
+        info!(
+            "Transpiled {} line(s) of FSL code to JSON!",
+            self.program.lines().count()
+        );
+        Value::Object(ast)
     }
 }
 
@@ -118,6 +136,7 @@ mod tests {
     use crate::transpiler::fsl_transpiler::Fslt;
     use anyhow::Result;
     use hamcrest::{equal_to, is, HamcrestMatcher};
+    use log::Level;
 
     #[test]
     fn transpiles_program_as_string() -> Result<()> {
@@ -125,8 +144,15 @@ mod tests {
         let program = String::from("me: @jeff\n");
         let fsl = Fslt::program(program);
         let ast = fsl.out();
-        let first = ast.first().expect("Failed to get first value");
-        assert_that!(first, is(equal_to("login:@jeff")));
+        testing_logger::validate(|logs| {
+            assert_eq!(logs.len(), 1);
+            assert_eq!(
+                logs[0].body,
+                "Transpiled 1 line(s) of FSL code to JSON!"
+            );
+            assert_eq!(logs[0].level, Level::Info);
+        });
+        assert_that!(ast["login"].as_str(), is(equal_to(Some("@jeff"))));
         Ok(())
     }
 
@@ -134,8 +160,7 @@ mod tests {
     fn transpiles_program_from_file() -> Result<()> {
         let transpiler = Fslt::program(sample_program("me.fsl"));
         let ast = transpiler.out();
-        let first = ast.first().expect("Failed to get first value");
-        assert_that!(first, is(equal_to("login:@jeff")));
+        assert_that!(ast["login"].as_str(), is(equal_to(Some("@jeff"))));
         Ok(())
     }
 
@@ -143,7 +168,18 @@ mod tests {
     fn transpiles_full_program() -> Result<()> {
         let transpiler = Fslt::program(sample_program("plusfoo-plusbar.fsl"));
         let ast = transpiler.out();
-        print!("{:?}", ast);
+        let commands =
+            ast["commands"].as_array().expect("Failed to get commands");
+        let first = commands.first().expect("Failed to get first command");
+        let second = commands.get(1).expect("Failed to get second command");
+        assert_that!(commands.len(), is(equal_to(2)));
+        assert_that!(ast["login"].as_str(), is(equal_to(Some("@jeff"))));
+        assert_that!(first["oid"].as_str(), is(equal_to(Some("repo"))));
+        assert_that!(first["attrs"].as_str(), is(equal_to(Some("me/foo"))));
+        assert_that!(first["ref"].as_str(), is(equal_to(Some("x"))));
+        assert_that!(second["oid"].as_str(), is(equal_to(Some("repo"))));
+        assert_that!(second["attrs"].as_str(), is(equal_to(Some("me/bar"))));
+        assert_that!(second["ref"].as_str(), is(equal_to(Some("y"))));
         Ok(())
     }
 }
