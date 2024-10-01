@@ -137,6 +137,7 @@ mod tests {
     use anyhow::Result;
     use hamcrest::{equal_to, is, HamcrestMatcher};
     use log::Level;
+    use std::path::Path;
 
     #[test]
     fn transpiles_program_as_string() -> Result<()> {
@@ -158,7 +159,7 @@ mod tests {
 
     #[test]
     fn transpiles_program_from_file() -> Result<()> {
-        let transpiler = Fslt::program(sample_program("me.fsl"));
+        let transpiler = Fslt::file(Path::new("resources/programs/me.fsl"));
         let ast = transpiler.out();
         assert_that!(ast["login"].as_str(), is(equal_to(Some("@jeff"))));
         Ok(())
