@@ -42,7 +42,7 @@ Here, we logged in as `@jeff` fake GitHub user, created two repositories:
 `jeff/foo`, `jeff/bar`, submitted new issue with title `"this is testing"` and
 `"bug"` label to `jeff/foo`.
 
-And then compile it:
+And then transpile it:
 
 ```rust
 use fsl::transpiler::fsl_transpiler::Fslt;
@@ -52,7 +52,8 @@ let output = Fslt::file(Path::new("init.fsl")).out();
 // output...
 ```
 
-This should compile `init.fsl` to [fakehub-compatible][fakehub] output.
+This should transpile `init.fsl` to [fakehub-compatible][fakehub] output in
+[JSON] format.
 
 ### Apply to fakehub
 
@@ -101,3 +102,4 @@ just full
 [Rust]: https://www.rust-lang.org/tools/install
 [just]: https://just.systems/man/en/chapter_4.html
 [fsl-crates]: https://crates.io/crates/fsl
+[JSON]: https://en.wikipedia.org/wiki/JSON
