@@ -63,10 +63,29 @@ impl Fslt {
                                 for me in inner.into_inner() {
                                     if me.as_rule() == Rule::login {
                                         let login = me.as_str();
-                                        ast.push(login);
+                                        ast.push(format!("login:{}", login).as_str());
                                     }
                                 }
-                            },
+                            }
+                            Rule::command => {
+                                for command in inner.into_inner() {
+                                    if command.as_rule() == Rule::object {
+                                        for object in command.into_inner() {
+                                            if object.as_rule() == Rule::oid {
+                                                ast.push(format!("oid:{}", object.as_str()).as_str());
+                                            } else if object.as_rule() == Rule::attributes {
+                                                ast.push(format!("attrs:{}", object.as_str()).as_str());
+                                            } else if object.as_rule() == Rule::new {
+                                                for new in object.into_inner() {
+                                                    if new.as_rule() == Rule::reference {
+                                                        ast.push(format!("ref:{}", new.as_str()).as_str());
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                             _ => {}
                         }
                     }
@@ -80,10 +99,10 @@ impl Fslt {
 
 #[cfg(test)]
 mod tests {
+    use crate::sample_program::sample_program;
     use crate::transpiler::fsl_transpiler::Fslt;
     use anyhow::Result;
     use hamcrest::{equal_to, is, HamcrestMatcher};
-    use crate::sample_program::sample_program;
 
     #[test]
     fn transpiles_program_as_string() -> Result<()> {
@@ -102,6 +121,11 @@ mod tests {
         let ast = transpiler.out();
         let first = ast.first().expect("Failed to get first value");
         assert_that!(first, is(equal_to("@jeff")));
+        Ok(())
+    }
+
+    #[test]
+    fn transpiles_full_program() -> Result<()> {
         Ok(())
     }
 }
