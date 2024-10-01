@@ -38,7 +38,7 @@ mod tests {
     #[parameterized(
         program = {
             &sample_program("me.fsl"),
-            &sample_program("plusrepo-plusbar.fsl")
+            &sample_program("plusfoo-plusbar.fsl")
         }
       )
     ]
