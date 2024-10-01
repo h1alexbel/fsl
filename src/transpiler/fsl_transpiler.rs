@@ -50,7 +50,7 @@ impl Fslt {
     }
 
     /// Out.
-    pub fn out(&self) -> Vec<&str> {
+    pub fn out(&self) -> Vec<String> {
         let mut ast = vec![];
         let pairs = FslParser::parse(Rule::program, &self.program)
             .expect("Failed to parse program");
@@ -63,7 +63,7 @@ impl Fslt {
                                 for me in inner.into_inner() {
                                     if me.as_rule() == Rule::login {
                                         let login = me.as_str();
-                                        ast.push(format!("login:{}", login).as_str());
+                                        ast.push(format!("login:{}", login));
                                     }
                                 }
                             }
@@ -72,13 +72,13 @@ impl Fslt {
                                     if command.as_rule() == Rule::object {
                                         for object in command.into_inner() {
                                             if object.as_rule() == Rule::oid {
-                                                ast.push(format!("oid:{}", object.as_str()).as_str());
+                                                ast.push(format!("oid:{}", object.as_str()));
                                             } else if object.as_rule() == Rule::attributes {
-                                                ast.push(format!("attrs:{}", object.as_str()).as_str());
+                                                ast.push(format!("attrs:{}", object.as_str()));
                                             } else if object.as_rule() == Rule::new {
                                                 for new in object.into_inner() {
                                                     if new.as_rule() == Rule::reference {
-                                                        ast.push(format!("ref:{}", new.as_str()).as_str());
+                                                        ast.push(format!("ref:{}", new.as_str()));
                                                     }
                                                 }
                                             }
