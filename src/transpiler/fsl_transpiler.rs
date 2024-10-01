@@ -83,6 +83,7 @@ mod tests {
     use crate::transpiler::fsl_transpiler::Fslt;
     use anyhow::Result;
     use hamcrest::{equal_to, is, HamcrestMatcher};
+    use crate::sample_program::sample_program;
 
     #[test]
     fn transpiles_program_as_string() -> Result<()> {
@@ -95,11 +96,12 @@ mod tests {
         Ok(())
     }
 
-    // #[test]
-    // fn transpiles_program_from_file() -> Result<()> {
-    //     let transpiler = Fslt::program(sample_program("plusrepo-plusbar.fsl"));
-    //     let ast = transpiler.out();
-    //     print!("{:#?}", ast);
-    //     Ok(())
-    // }
+    #[test]
+    fn transpiles_program_from_file() -> Result<()> {
+        let transpiler = Fslt::program(sample_program("plusrepo-plusbar.fsl"));
+        let ast = transpiler.out();
+        let first = ast.first().expect("Failed to get first value");
+        assert_that!(first, is(equal_to("@jeff")));
+        Ok(())
+    }
 }
