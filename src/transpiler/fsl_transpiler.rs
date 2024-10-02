@@ -110,6 +110,28 @@ impl Fslt {
                                                     );
                                                 }
                                             }
+                                        } else if object.as_rule()
+                                            == Rule::application
+                                        {
+                                            for application in
+                                                object.into_inner()
+                                            {
+                                                if application.as_rule()
+                                                    == Rule::reference
+                                                {
+                                                    cob.insert(
+                                                        String::from(
+                                                            "application",
+                                                        ),
+                                                        Value::String(
+                                                            String::from(
+                                                                application
+                                                                    .as_str(),
+                                                            ),
+                                                        ),
+                                                    );
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -181,6 +203,20 @@ mod tests {
         assert_that!(second["oid"].as_str(), is(equal_to(Some("repo"))));
         assert_that!(second["attrs"].as_str(), is(equal_to(Some("me/bar"))));
         assert_that!(second["ref"].as_str(), is(equal_to(Some("y"))));
+        Ok(())
+    }
+
+    #[test]
+    fn transpiles_program_with_application() -> Result<()> {
+        let transpiler = Fslt::program(sample_program("application.fsl"));
+        let ast = transpiler.out();
+        let commands =
+            ast["commands"].as_array().expect("Failed to get commands");
+        let command = commands
+            .iter()
+            .find(|c| c["oid"].as_str() == Some("issue"))
+            .expect("Failed to find command");
+        assert_that!(command["application"].as_str(), is(equal_to(Some("x"))));
         Ok(())
     }
 }

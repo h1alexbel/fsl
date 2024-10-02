@@ -124,6 +124,22 @@ mod tests {
         Ok(())
     }
 
+    #[test]
+    fn parses_application() -> Result<()> {
+        let parsed = FslParser::parse(Rule::application, "-> x")
+            .expect("Failed to parse application syntax");
+        assert_that!(parsed.as_str(), is(equal_to("-> x")));
+        Ok(())
+    }
+
+    #[test]
+    fn parses_object_with_application() -> Result<()> {
+        let parsed = FslParser::parse(Rule::object, "issue testing -> x")
+            .expect("Failed to parse object syntax");
+        assert_that!(parsed.as_str(), is(equal_to("issue testing -> x")));
+        Ok(())
+    }
+
     #[should_panic(expected = "Failed to parse reference")]
     #[parameterized(
         input = {
