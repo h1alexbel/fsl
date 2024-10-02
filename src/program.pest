@@ -23,6 +23,10 @@
 /// Program.
 program = { (me ~ NEWLINE) ~ (command ~ NEWLINE)* }
 command = { CREATION ~ object }
+// @todo #19:45min Implement error decoration for FSL syntax.
+//  We need to add program validation after transpilation process. Once we
+//  obtained transpiled JSON program, we need to collect errors, and display
+//  them in special `"errors": []` JSON node.
 object = { oid ~ WHITE_SPACE ~ (attributes ~ WHITE_SPACE)? ~ (new | application)? }
 oid = { char+ }
 attributes = { (ME ~ AT ~ char+) | char+ }
