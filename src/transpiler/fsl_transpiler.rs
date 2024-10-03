@@ -54,6 +54,7 @@ impl Fslt {
     /// Out.
     pub fn out(&self) -> Value {
         let mut ast = Map::new();
+        let mut prog = Map::new();
         let pairs = FslParser::parse(Rule::program, &self.program)
             .expect("Failed to parse program");
         let mut cast = Vec::new();
@@ -64,7 +65,7 @@ impl Fslt {
                         Rule::me => {
                             for me in inner.into_inner() {
                                 if me.as_rule() == Rule::login {
-                                    ast.insert(
+                                    prog.insert(
                                         String::from("login"),
                                         Value::String(String::from(
                                             me.as_str(),
@@ -143,7 +144,8 @@ impl Fslt {
                 }
             }
         }
-        ast.insert(String::from("commands"), Value::Array(cast));
+        prog.insert(String::from("commands"), Value::Array(cast));
+        ast.insert(String::from("program"), Value::Object(prog));
         info!(
             "Transpiled {} line(s) of FSL code to JSON!",
             self.program.lines().count()
@@ -183,7 +185,11 @@ mod tests {
     fn transpiles_program_from_file() -> Result<()> {
         let transpiler = Fslt::file(Path::new("resources/programs/me.fsl"));
         let ast = transpiler.out();
-        assert_that!(ast["login"].as_str(), is(equal_to(Some("@jeff"))));
+        let login = ast
+            .get("program")
+            .and_then(|p| p.get("login"))
+            .expect("Failed to get login");
+        assert_that!(login.as_str(), is(equal_to(Some("@jeff"))));
         Ok(())
     }
 
@@ -191,12 +197,15 @@ mod tests {
     fn transpiles_full_program() -> Result<()> {
         let transpiler = Fslt::program(sample_program("plusfoo-plusbar.fsl"));
         let ast = transpiler.out();
-        let commands =
-            ast["commands"].as_array().expect("Failed to get commands");
+        let program = ast.get("program").expect("Failed to get program");
+        let commands = program
+            .get("commands")
+            .and_then(|c| c.as_array())
+            .expect("Failed to get commands");
         let first = commands.first().expect("Failed to get first command");
         let second = commands.get(1).expect("Failed to get second command");
         assert_that!(commands.len(), is(equal_to(2)));
-        assert_that!(ast["login"].as_str(), is(equal_to(Some("@jeff"))));
+        assert_that!(program["login"].as_str(), is(equal_to(Some("@jeff"))));
         assert_that!(first["oid"].as_str(), is(equal_to(Some("repo"))));
         assert_that!(first["attrs"].as_str(), is(equal_to(Some("me/foo"))));
         assert_that!(first["ref"].as_str(), is(equal_to(Some("x"))));
@@ -210,8 +219,11 @@ mod tests {
     fn transpiles_program_with_application() -> Result<()> {
         let transpiler = Fslt::program(sample_program("application.fsl"));
         let ast = transpiler.out();
-        let commands =
-            ast["commands"].as_array().expect("Failed to get commands");
+        let commands = ast
+            .get("program")
+            .and_then(|p| p.get("commands"))
+            .and_then(|c| c.as_array())
+            .expect("Failed to get commands");
         let command = commands
             .iter()
             .find(|c| c["oid"].as_str() == Some("issue"))
