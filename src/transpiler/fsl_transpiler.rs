@@ -177,7 +177,8 @@ mod tests {
             );
             assert_eq!(logs[0].level, Level::Info);
         });
-        assert_that!(ast["login"].as_str(), is(equal_to(Some("@jeff"))));
+        let login = ast["program"].get("login").expect("failed to get login");
+        assert_that!(login.as_str(), is(equal_to(Some("@jeff"))));
         Ok(())
     }
 
