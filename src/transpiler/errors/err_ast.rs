@@ -21,6 +21,7 @@
 // SOFTWARE.
 use crate::transpiler::errors::check::Check;
 use crate::transpiler::errors::duplicate_refs::DuplicateRefs;
+use crate::transpiler::errors::invalid_application_ref::InvalidApplicationRef;
 use crate::transpiler::fsl_transpiler::Fslt;
 use serde_json::{json, Value};
 
@@ -37,7 +38,10 @@ impl ErrAst {
     pub fn default(base: Fslt) -> ErrAst {
         ErrAst {
             base,
-            checks: vec![Box::new(DuplicateRefs {})],
+            checks: vec![
+                Box::new(DuplicateRefs {}),
+                Box::new(InvalidApplicationRef {}),
+            ],
         }
     }
 

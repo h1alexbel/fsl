@@ -25,3 +25,5 @@ pub mod check;
 pub mod duplicate_refs;
 /// Error AST decoration.
 pub mod err_ast;
+/// Invalid application ref check.
+pub mod invalid_application_ref;
