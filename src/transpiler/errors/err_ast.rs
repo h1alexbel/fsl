@@ -74,6 +74,7 @@ mod tests {
     use crate::sample_program::sample_program;
     use crate::transpiler::errors::duplicate_refs::DuplicateRefs;
     use crate::transpiler::errors::err_ast::ErrAst;
+    use crate::transpiler::errors::invalid_application_ref::InvalidApplicationRef;
     use crate::transpiler::fsl_transpiler::Fslt;
     use anyhow::Result;
     use hamcrest::{equal_to, is, HamcrestMatcher};
@@ -84,6 +85,20 @@ mod tests {
             Fslt::program(sample_program("errors/duplicate-refs.fsl"));
         let decorated =
             ErrAst::new(transpiler, vec![Box::new(DuplicateRefs {})])
+                .decorate();
+        let errors = decorated["errors"]
+            .as_array()
+            .expect("failed to get errors");
+        assert_that!(errors.is_empty(), is(equal_to(false)));
+        Ok(())
+    }
+
+    #[test]
+    fn adds_error_for_invalid_application_ref() -> Result<()> {
+        let transpiler =
+            Fslt::program(sample_program("errors/invalid-application-ref.fsl"));
+        let decorated =
+            ErrAst::new(transpiler, vec![Box::new(InvalidApplicationRef {})])
                 .decorate();
         let errors = decorated["errors"]
             .as_array()
