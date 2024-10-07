@@ -56,7 +56,7 @@ impl ErrAst {
             }
         }
         if !duplicates.is_empty() {
-            errors.push(format!("Duplicate refs: {:?}", duplicates));
+            errors.push(format!("Duplicated refs: {:?}", duplicates));
         }
         json!(
             {
