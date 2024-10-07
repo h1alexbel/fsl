@@ -1,8 +1,3 @@
-use crate::transpiler::fsl_transpiler::Fslt;
-use log::info;
-use serde_json::{json, Value};
-use std::collections::HashSet;
-
 // The MIT License (MIT)
 //
 // Copyright (c) 2024 Aliaksei Bialiauski
@@ -24,6 +19,10 @@ use std::collections::HashSet;
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+use crate::transpiler::fsl_transpiler::Fslt;
+use serde_json::{json, Value};
+use std::collections::HashSet;
+
 /// AST, decorated with errors.
 pub struct ErrAst {
     /// Base AST.
@@ -47,13 +46,7 @@ impl ErrAst {
             .expect("failed to get commands");
         let refs: Vec<&Value> = commands
             .iter()
-            .filter_map(|c| {
-                if let Some(r) = c.get("ref") {
-                    Some(r)
-                } else {
-                    None
-                }
-            })
+            .filter_map(|c| c.get("ref").map(|r| r))
             .collect();
         let mut seen = HashSet::new();
         let mut duplicates = Vec::new();
@@ -76,7 +69,6 @@ impl ErrAst {
 
 #[cfg(test)]
 mod tests {
-
     use crate::sample_program::sample_program;
     use crate::transpiler::err_ast::ErrAst;
     use crate::transpiler::fsl_transpiler::Fslt;
