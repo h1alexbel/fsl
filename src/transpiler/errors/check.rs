@@ -24,5 +24,5 @@ use serde_json::Value;
 /// AST check.
 pub trait Check {
     /// Decorate.
-    fn decorate(self) -> Value;
+    fn inspect(&self, ast: &Value) -> Vec<String>;
 }

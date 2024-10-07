@@ -24,31 +24,18 @@ use serde_json::Value;
 use std::collections::HashSet;
 
 /// Duplicate refs check.
-pub struct DuplicateRefs {
-    /// AST.
-    pub ast: Value,
-}
-
-impl DuplicateRefs {
-    /// New.
-    pub fn new(ast: Value) -> DuplicateRefs {
-        DuplicateRefs { ast }
-    }
-}
+pub struct DuplicateRefs {}
 
 impl Check for DuplicateRefs {
-    fn decorate(self) -> Value {
+    fn inspect(&self, ast: &Value) -> Vec<String> {
         let mut errors = Vec::new();
-        let commands = self
-            .ast
+        let commands = ast
             .get("program")
             .and_then(|p| p.get("commands"))
             .and_then(|c| c.as_array())
             .expect("failed to get commands");
-        let refs: Vec<&Value> = commands
-            .iter()
-            .filter_map(|c| c.get("ref").map(|r| r))
-            .collect();
+        let refs: Vec<&Value> =
+            commands.iter().filter_map(|c| c.get("ref")).collect();
         let mut seen = HashSet::new();
         let mut duplicates = Vec::new();
         for r in refs {
@@ -57,12 +44,9 @@ impl Check for DuplicateRefs {
             }
         }
         if !duplicates.is_empty() {
-            errors.push(Value::String(format!(
-                "Duplicated refs: {:?}",
-                duplicates
-            )));
+            errors.push(format!("Duplicated refs: {:?}", duplicates));
         }
-        Value::Array(errors)
+        errors
     }
 }
 
@@ -78,17 +62,10 @@ mod tests {
 
     #[test]
     fn adds_error_for_duplicate_refs() -> Result<()> {
-        let decorated = DuplicateRefs::new(
-            Fslt::program(sample_program("errors/duplicate-refs.fsl")).out(),
-        )
-        .decorate();
-        assert_that!(
-            decorated
-                .as_array()
-                .expect("failed to get errors")
-                .is_empty(),
-            is(equal_to(false))
-        );
+        let transpiler =
+            Fslt::program(sample_program("errors/duplicate-refs.fsl"));
+        let errors = DuplicateRefs {}.inspect(&transpiler.out());
+        assert_that!(errors.is_empty(), is(equal_to(false)));
         Ok(())
     }
 }

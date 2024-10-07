@@ -19,7 +19,9 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+/// AST Check.
+pub mod check;
+/// Duplicate refs check.
+pub mod duplicate_refs;
 /// Error AST decoration.
 pub mod err_ast;
-mod check;
-mod duplicate_refs;

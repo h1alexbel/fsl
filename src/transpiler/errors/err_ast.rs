@@ -20,8 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 use crate::transpiler::errors::check::Check;
+use crate::transpiler::errors::duplicate_refs::DuplicateRefs;
 use crate::transpiler::fsl_transpiler::Fslt;
-use serde_json::Value;
+use serde_json::{json, Value};
 
 /// AST, decorated with errors.
 pub struct ErrAst {
@@ -36,7 +37,7 @@ impl ErrAst {
     pub fn default(base: Fslt) -> ErrAst {
         ErrAst {
             base,
-            checks: vec![],
+            checks: vec![Box::new(DuplicateRefs {})],
         }
     }
 
@@ -46,20 +47,44 @@ impl ErrAst {
     }
 
     /// Decorate.
-    pub fn decorate(self) -> Value {
+    pub fn decorate(&self) -> Value {
         let ast = self.base.out();
-
-        // checks.iter().forEach(|c| c.decorate());
-        Value::String(String::from(""))
+        let mut aggregated = Vec::new();
+        self.checks.iter().for_each(|c| {
+            let errors = c.inspect(&ast);
+            for err in errors {
+                aggregated.push(err);
+            }
+        });
+        json!(
+            {
+                "program": ast["program"],
+                "errors": aggregated
+            }
+        )
     }
 }
 
 #[cfg(test)]
 mod tests {
+    use crate::sample_program::sample_program;
+    use crate::transpiler::errors::duplicate_refs::DuplicateRefs;
+    use crate::transpiler::errors::err_ast::ErrAst;
+    use crate::transpiler::fsl_transpiler::Fslt;
     use anyhow::Result;
+    use hamcrest::{equal_to, is, HamcrestMatcher};
 
     #[test]
     fn adds_error_for_duplicate_refs() -> Result<()> {
+        let transpiler =
+            Fslt::program(sample_program("errors/duplicate-refs.fsl"));
+        let decorated =
+            ErrAst::new(transpiler, vec![Box::new(DuplicateRefs {})])
+                .decorate();
+        let errors = decorated["errors"]
+            .as_array()
+            .expect("failed to get errors");
+        assert_that!(errors.is_empty(), is(equal_to(false)));
         Ok(())
     }
 }
