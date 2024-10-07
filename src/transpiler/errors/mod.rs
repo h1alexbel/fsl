@@ -19,23 +19,9 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-
-/// Program.
-program = { (me ~ NEWLINE) ~ (command ~ NEWLINE)* }
-command = { CREATION ~ object }
-object = { oid ~ WHITE_SPACE ~ (attributes ~ WHITE_SPACE)? ~ (new | application)? }
-oid = { char+ }
-attributes = { (ME ~ AT ~ char+) | char+ }
-new = { ASSIGNMENT ~ WHITE_SPACE ~ reference}
-application = { APPLICATION ~ WHITE_SPACE ~ reference }
-reference = { char+ }
-me = { ME ~ SEMICOLON ~ WHITE_SPACE ~ login }
-login = { "@" ~ char+ }
-char = { LOWERCASE_LETTER }
-
-ASSIGNMENT = {">"}
-CREATION = {"+"}
-APPLICATION = {"->"}
-ME = {"me"}
-AT = {"/"}
-SEMICOLON = {":"}
+/// AST Check.
+pub mod check;
+/// Duplicate refs check.
+pub mod duplicate_refs;
+/// Error AST decoration.
+pub mod err_ast;
