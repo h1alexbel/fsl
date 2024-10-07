@@ -106,4 +106,16 @@ mod tests {
         assert_that!(errors.is_empty(), is(equal_to(false)));
         Ok(())
     }
+
+    #[test]
+    fn composes_errors() -> Result<()> {
+        let transpiler =
+            Fslt::program(sample_program("errors/duplicate-invalid.fsl"));
+        let decorated = ErrAst::default(transpiler).decorate();
+        let errors = decorated["errors"]
+            .as_array()
+            .expect("failed to get errors");
+        assert_that!(errors.len(), is(equal_to(2)));
+        Ok(())
+    }
 }
