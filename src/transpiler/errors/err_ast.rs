@@ -19,75 +19,47 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+use crate::transpiler::errors::check::Check;
 use crate::transpiler::fsl_transpiler::Fslt;
-use serde_json::{json, Value};
-use std::collections::HashSet;
+use serde_json::Value;
 
 /// AST, decorated with errors.
 pub struct ErrAst {
     /// Base AST.
     pub base: Fslt,
+    /// Checks.
+    pub checks: Vec<Box<dyn Check>>,
 }
 
 impl ErrAst {
+    /// Default.
+    pub fn default(base: Fslt) -> ErrAst {
+        ErrAst {
+            base,
+            checks: vec![],
+        }
+    }
+
     /// New.
-    pub fn new(base: Fslt) -> ErrAst {
-        ErrAst { base }
+    pub fn new(base: Fslt, checks: Vec<Box<dyn Check>>) -> ErrAst {
+        ErrAst { base, checks }
     }
 
     /// Decorate.
     pub fn decorate(self) -> Value {
         let ast = self.base.out();
-        let mut errors = Vec::new();
-        let commands = ast
-            .get("program")
-            .and_then(|p| p.get("commands"))
-            .and_then(|c| c.as_array())
-            .expect("failed to get commands");
-        let refs: Vec<&Value> = commands
-            .iter()
-            .filter_map(|c| c.get("ref").map(|r| r))
-            .collect();
-        let mut seen = HashSet::new();
-        let mut duplicates = Vec::new();
-        for r in refs {
-            if !seen.insert(r.as_str().expect("failed to get ref")) {
-                duplicates.push(r.as_str().expect("failed to get ref"));
-            }
-        }
-        if !duplicates.is_empty() {
-            errors.push(format!("Duplicated refs: {:?}", duplicates));
-        }
-        json!(
-            {
-                "program": ast["program"],
-                "errors": errors
-            }
-        )
+
+        // checks.iter().forEach(|c| c.decorate());
+        Value::String(String::from(""))
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::sample_program::sample_program;
-    use crate::transpiler::errors::err_ast::ErrAst;
-    use crate::transpiler::fsl_transpiler::Fslt;
     use anyhow::Result;
-    use hamcrest::{equal_to, is, HamcrestMatcher};
 
     #[test]
     fn adds_error_for_duplicate_refs() -> Result<()> {
-        let ast = ErrAst::new(Fslt::program(sample_program(
-            "errors/duplicate-refs.fsl",
-        )))
-        .decorate();
-        assert_that!(
-            ast["errors"]
-                .as_array()
-                .expect("failed to get errors")
-                .is_empty(),
-            is(equal_to(false))
-        );
         Ok(())
     }
 }

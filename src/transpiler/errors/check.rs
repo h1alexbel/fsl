@@ -1,3 +1,5 @@
+use serde_json::Value;
+
 // The MIT License (MIT)
 //
 // Copyright (c) 2024 Aliaksei Bialiauski
@@ -19,7 +21,8 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-/// Error AST decoration.
-pub mod err_ast;
-mod check;
-mod duplicate_refs;
+/// AST check.
+pub trait Check {
+    /// Decorate.
+    fn decorate(self) -> Value;
+}
