@@ -1,7 +1,7 @@
-use std::collections::HashSet;
 use crate::transpiler::fsl_transpiler::Fslt;
 use log::info;
 use serde_json::{json, Value};
+use std::collections::HashSet;
 
 // The MIT License (MIT)
 //
@@ -45,13 +45,16 @@ impl ErrAst {
             .and_then(|p| p.get("commands"))
             .and_then(|c| c.as_array())
             .expect("failed to get commands");
-        let refs: Vec<&Value> = commands.iter().filter_map(|c| {
-            if let Some(r) = c.get("ref") {
-                Some(r)
-            } else {
-                None
-            }
-        }).collect();
+        let refs: Vec<&Value> = commands
+            .iter()
+            .filter_map(|c| {
+                if let Some(r) = c.get("ref") {
+                    Some(r)
+                } else {
+                    None
+                }
+            })
+            .collect();
         let mut seen = HashSet::new();
         let mut duplicates = Vec::new();
         for r in refs {
@@ -78,6 +81,7 @@ mod tests {
     use crate::transpiler::err_ast::ErrAst;
     use crate::transpiler::fsl_transpiler::Fslt;
     use anyhow::Result;
+    use hamcrest::{equal_to, is, HamcrestMatcher};
 
     #[test]
     fn adds_error_for_duplicate_refs() -> Result<()> {
@@ -85,7 +89,13 @@ mod tests {
             "errors/duplicate-refs.fsl",
         )))
         .decorate();
-        print!("{}", ast);
+        assert_that!(
+            ast["errors"]
+                .as_array()
+                .expect("failed to get errors")
+                .is_empty(),
+            is(equal_to(false))
+        );
         Ok(())
     }
 }
