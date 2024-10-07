@@ -21,7 +21,7 @@
 # SOFTWARE.
 [package]
 name = "fsl"
-version = "0.0.0"
+version = "0.0.4"
 edition = "2021"
 license = "MIT"
 description = "FakeHub State Language. DSL for managing state in fakehub"
