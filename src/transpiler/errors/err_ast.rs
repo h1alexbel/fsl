@@ -70,7 +70,7 @@ impl ErrAst {
 #[cfg(test)]
 mod tests {
     use crate::sample_program::sample_program;
-    use crate::transpiler::err_ast::ErrAst;
+    use crate::transpiler::errors::err_ast::ErrAst;
     use crate::transpiler::fsl_transpiler::Fslt;
     use anyhow::Result;
     use hamcrest::{equal_to, is, HamcrestMatcher};
