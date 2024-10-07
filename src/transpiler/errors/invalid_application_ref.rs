@@ -42,7 +42,7 @@ impl Check for InvalidApplicationRef {
         applications.iter().for_each(|a| {
             if !refs.contains(a) {
                 errors.push(format!(
-                    "Invalid application -> {}; Ref `{}` does not exist ",
+                    "Invalid application -> {}; Ref `{}` does not exist",
                     a, a
                 ));
             }
@@ -65,7 +65,12 @@ mod tests {
         let transpiler =
             Fslt::program(sample_program("errors/invalid-application-ref.fsl"));
         let errors = InvalidApplicationRef {}.inspect(&transpiler.out());
-        assert_that!(errors.is_empty(), is(equal_to(false)));
+        assert_that!(
+            errors.first().expect("failed to get first error"),
+            is(equal_to(
+                "Invalid application -> \"x\"; Ref `\"x\"` does not exist"
+            ))
+        );
         Ok(())
     }
 }
