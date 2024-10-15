@@ -2,4 +2,4 @@
 me: @jeff
 # Create a few repos.
 +repo me/foo > x
-+repo me/bar > y
++repo me/bar > y # create this too
