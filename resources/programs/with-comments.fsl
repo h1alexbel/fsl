@@ -1,0 +1,5 @@
+# Login as jeff.
+me: @jeff
+# Create a few repos.
++repo me/foo > x
++repo me/bar > y
