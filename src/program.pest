@@ -21,7 +21,9 @@
 // SOFTWARE.
 
 /// Program.
-program = { (me ~ NEWLINE) ~ (command ~ NEWLINE)* }
+program = { comment* ~ (me ~ NEWLINE) ~ comment* ~ (command ~ NEWLINE)* ~ comment* }
+comment = { COMMENT_HASH ~ (WHITE_SPACE ~ ctext)* ~ NEWLINE? }
+ctext = { (LOWERCASE_LETTER | UPPERCASE_LETTER)* }
 command = { CREATION ~ object }
 object = { oid ~ WHITE_SPACE ~ (attributes ~ WHITE_SPACE)? ~ (new | application)? }
 oid = { char+ }
@@ -33,6 +35,7 @@ me = { ME ~ SEMICOLON ~ WHITE_SPACE ~ login }
 login = { "@" ~ char+ }
 char = { LOWERCASE_LETTER }
 
+COMMENT_HASH = {"#"}
 ASSIGNMENT = {">"}
 CREATION = {"+"}
 APPLICATION = {"->"}

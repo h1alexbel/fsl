@@ -158,4 +158,18 @@ mod tests {
         FslParser::parse(Rule::reference, input)
             .expect("Failed to parse reference");
     }
+
+    #[parameterized(
+        input = {
+            "# test",
+            "#  extra space",
+            "# with extra words"
+        }
+    )]
+    fn parses_comment(input: &str) -> Result<()> {
+        let parsed = FslParser::parse(Rule::comment, input)
+            .expect("failed to parse comment");
+        assert_that!(parsed.as_str(), is(equal_to(input)));
+        Ok(())
+    }
 }
