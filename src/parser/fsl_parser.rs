@@ -171,7 +171,7 @@ mod tests {
             "# it works THIS way TOO.",
             "# parses with tag inside #",
             "# parses with text after tag # this way",
-            "# parses `special` 'characters' ```test```"
+            "# `special` 'characters' ```test```"
         }
     )]
     fn parses_comment(input: &str) -> Result<()> {
