@@ -1,4 +1,3 @@
-# Login as jeff.
 me: @jeff
 # Create foo repo, assign to `x`.
 +repo me/foo > x
