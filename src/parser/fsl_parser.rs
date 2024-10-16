@@ -169,8 +169,8 @@ mod tests {
             "# test, and another test.",
             "#sticky works too.",
             "# it works THIS way TOO.",
-            "# parses with hash inside #",
-            "# parses with text after hash # this way"
+            "# parses with tag inside #",
+            "# parses with text after tag # this way"
         }
     )]
     fn parses_comment(input: &str) -> Result<()> {
