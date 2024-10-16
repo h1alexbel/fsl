@@ -162,14 +162,26 @@ mod tests {
     #[parameterized(
         input = {
             "# test",
+            "# UPPER CASE",
             "#  extra space",
-            "# with extra words"
+            "# with extra words",
+            "# with dot in the end.",
+            "# test, and another test."
         }
     )]
     fn parses_comment(input: &str) -> Result<()> {
         let parsed = FslParser::parse(Rule::comment, input)
             .expect("failed to parse comment");
         assert_that!(parsed.as_str(), is(equal_to(input)));
+        Ok(())
+    }
+
+    #[test]
+    fn parses_program_with_comments() -> Result<()> {
+        let program = &sample_program("with-comments.fsl");
+        let pairs = FslParser::parse(Rule::program, program)
+            .expect("failed to parse program with comments");
+        print!("{}", pairs);
         Ok(())
     }
 }

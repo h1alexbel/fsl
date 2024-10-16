@@ -23,7 +23,7 @@
 /// Program.
 program = { comment* ~ (me ~ NEWLINE) ~ comment* ~ (command ~ NEWLINE)* ~ comment* }
 comment = { COMMENT_HASH ~ (WHITE_SPACE ~ ctext)* ~ NEWLINE? }
-ctext = { (LOWERCASE_LETTER | UPPERCASE_LETTER)* }
+ctext = { (LOWERCASE_LETTER | UPPERCASE_LETTER | PUNCTUATION)* }
 command = { CREATION ~ object }
 object = { oid ~ WHITE_SPACE ~ (attributes ~ WHITE_SPACE)? ~ (new | application)? }
 oid = { char+ }
