@@ -1,6 +1,0 @@
-# Login as jeff
-# More comments.
-# Event more...
-me: @jeff
-+repo me/foo > x
-+repo me/bar > y
