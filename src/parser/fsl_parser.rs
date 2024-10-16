@@ -186,7 +186,7 @@ mod tests {
         let program = &sample_program("with-comments.fsl");
         let pairs = FslParser::parse(Rule::program, program)
             .expect("failed to parse program with comments");
-        print!("{}", pairs);
+        assert_that!(pairs.as_str().len(), is(equal_to(143)));
         Ok(())
     }
 }
