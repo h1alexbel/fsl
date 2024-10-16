@@ -2,4 +2,5 @@ me: @jeff
 # Create foo repo, assign to `x`.
 +repo me/foo > x
 # Create bar repo, assign to `y`.
+# Here, `y` is a new variable.
 +repo me/bar > y
