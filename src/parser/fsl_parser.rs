@@ -166,7 +166,9 @@ mod tests {
             "#  extra space",
             "# with extra words",
             "# with dot in the end.",
-            "# test, and another test."
+            "# test, and another test.",
+            "#sticky works too.",
+            "# it works THIS way TOO."
         }
     )]
     fn parses_comment(input: &str) -> Result<()> {

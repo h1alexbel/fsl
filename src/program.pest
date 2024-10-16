@@ -21,7 +21,7 @@
 // SOFTWARE.
 
 /// Program.
-program = { comment* ~ (me ~ NEWLINE) ~ comment* ~ (command ~ NEWLINE)* ~ comment* }
+program = { comment* ~ (me ~ NEWLINE) ~ (command ~ NEWLINE)* }
 command = { CREATION ~ object }
 object = { oid ~ WHITE_SPACE ~ (attributes ~ WHITE_SPACE)? ~ (new | application)? }
 oid = { char+ }
@@ -32,8 +32,7 @@ reference = { char+ }
 me = { ME ~ SEMICOLON ~ WHITE_SPACE ~ login }
 login = { WHO ~ char+ }
 char = { LOWERCASE_LETTER }
-comment = { COMMENT_HASH ~ (WHITE_SPACE ~ ctext)* ~ NEWLINE? }
-ctext = { (LOWERCASE_LETTER | UPPERCASE_LETTER | PUNCTUATION)* }
+comment = { TAG ~ (!NEWLINE ~ ANY )* ~ NEWLINE? }
 
 ASSIGNMENT = {">"}
 CREATION = {"+"}
@@ -42,4 +41,4 @@ WHO = {"@"}
 ME = {"me"}
 AT = {"/"}
 SEMICOLON = {":"}
-COMMENT_HASH = {"#"}
+TAG = {"#"}
