@@ -1,5 +1,6 @@
 # Login as jeff.
 me: @jeff
-# Create a few repos.
+# Create foo repo, assign to `x`.
 +repo me/foo > x
-+repo me/bar > y # create this too
+# Create bar repo, assign to `y`.
++repo me/bar > y

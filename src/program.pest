@@ -21,7 +21,7 @@
 // SOFTWARE.
 
 /// Program.
-program = { comment* ~ (me ~ NEWLINE) ~ (command ~ NEWLINE)* }
+program = { comment* ~ (me ~ NEWLINE) ~ comment* ~ (comment? ~ command ~ NEWLINE)* }
 command = { CREATION ~ object }
 object = { oid ~ WHITE_SPACE ~ (attributes ~ WHITE_SPACE)? ~ (new | application)? }
 oid = { char+ }
