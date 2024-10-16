@@ -22,7 +22,7 @@
 
 /// Program.
 program = { (me ~ NEWLINE ~ comment*) ~ (command ~ NEWLINE)* }
-command = {comment? ~ CREATION ~ object }
+command = {comment* ~ CREATION ~ object ~ comment* }
 object = { oid ~ WHITE_SPACE ~ (attributes ~ WHITE_SPACE)? ~ (new | application)? }
 oid = { char+ }
 attributes = { (ME ~ AT ~ char+) | char+ }
