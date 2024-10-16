@@ -189,4 +189,13 @@ mod tests {
         assert_that!(pairs.as_str().len(), is(equal_to(143)));
         Ok(())
     }
+
+    #[test]
+    fn parses_program_with_license() -> Result<()> {
+        let program = &sample_program("with-license.fsl");
+        let pairs = FslParser::parse(Rule::program, program)
+            .expect("failed to parse program with license");
+        assert_that!(pairs.as_str().len(), is(equal_to(211)));
+        Ok(())
+    }
 }
